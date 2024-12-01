@@ -4,6 +4,8 @@ using Domain.Enums;
 
 namespace Domain.Models;
 
+#nullable enable
+
 public class Recipe
 {
     [Key]
@@ -31,5 +33,5 @@ public class Recipe
     public List<string> Instructions { get; set; }
 
     // Navigation Property
-    public ICollection<Measurement> Measurements { get; set; }
+    public ICollection<Measurement>? Measurements { get; set; }
 }

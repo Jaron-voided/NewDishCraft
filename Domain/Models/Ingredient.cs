@@ -1,6 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 using Domain.Enums;
 
+#nullable enable
+
 namespace Domain.Models;
 
 public class Ingredient
@@ -13,9 +15,6 @@ public class Ingredient
     public string Name { get; set; }
     
     [Required]
-    public MeasurementUnit MeasurementUnit { get; set; }
-    
-    [Required]
     public Categories.IngredientCategory Category { get; set; }
     
     [Required]
@@ -24,4 +23,5 @@ public class Ingredient
     public int MeasurementsPerPackage { get; set; }
     
     public NutritionalInfo? Nutrition { get; set; }
+    public MeasurementUnit? MeasurementUnit { get; set; }
 }

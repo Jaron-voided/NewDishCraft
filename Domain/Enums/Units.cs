@@ -1,12 +1,5 @@
 namespace Domain.Enums;
 
-public class MeasurementUnit
-{
-    public MeasuredIn MeasuredIn { get; set; }
-    public WeightUnit? WeightUnit { get; set; }
-    public VolumeUnit? VolumeUnit { get; set; }
-}
-
 public enum MeasuredIn
 {
     Weight = 0,
