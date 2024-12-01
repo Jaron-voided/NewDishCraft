@@ -17,7 +17,7 @@ public enum WeightUnit
 
 public enum VolumeUnit
 {
-    Millimeters = 0,
+    Milliliters = 0,
     Liters = 1,
     Cups = 2,
     FluidOunces = 3,

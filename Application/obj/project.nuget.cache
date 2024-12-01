@@ -1,9 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "1Wmo5Y5tKpQ=",
+  "dgSpecHash": "XgmkTExlel9rJ62yvSQTj/TdoO/EIk0IxiGiXcdIjyWckcQUgdssV80lm9xIAEKfZ+AlK3CEdUqYlFjG4o/W9w==",
   "success": true,
   "projectFilePath": "/home/zeref-dragneel/DishCraft/Application/Application.csproj",
   "expectedPackageFiles": [
+    "/home/zeref-dragneel/.nuget/packages/automapper/12.0.1/automapper.12.0.1.nupkg.sha512",
+    "/home/zeref-dragneel/.nuget/packages/automapper.extensions.microsoft.dependencyinjection/12.0.1/automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
+    "/home/zeref-dragneel/.nuget/packages/mediatr/12.4.1/mediatr.12.4.1.nupkg.sha512",
+    "/home/zeref-dragneel/.nuget/packages/mediatr.contracts/2.0.1/mediatr.contracts.2.0.1.nupkg.sha512",
+    "/home/zeref-dragneel/.nuget/packages/microsoft.csharp/4.7.0/microsoft.csharp.4.7.0.nupkg.sha512",
     "/home/zeref-dragneel/.nuget/packages/microsoft.data.sqlite.core/8.0.0/microsoft.data.sqlite.core.8.0.0.nupkg.sha512",
     "/home/zeref-dragneel/.nuget/packages/microsoft.entityframeworkcore/8.0.0/microsoft.entityframeworkcore.8.0.0.nupkg.sha512",
     "/home/zeref-dragneel/.nuget/packages/microsoft.entityframeworkcore.abstractions/8.0.0/microsoft.entityframeworkcore.abstractions.8.0.0.nupkg.sha512",

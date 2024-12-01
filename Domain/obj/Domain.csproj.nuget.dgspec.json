@@ -13,7 +13,6 @@
         "packagesPath": "/home/zeref-dragneel/.nuget/packages/",
         "outputPath": "/home/zeref-dragneel/DishCraft/Domain/obj/",
         "projectStyle": "PackageReference",
-        "UsingMicrosoftNETSdk": false,
         "configFilePaths": [
           "/home/zeref-dragneel/.nuget/NuGet/NuGet.Config"
         ],
