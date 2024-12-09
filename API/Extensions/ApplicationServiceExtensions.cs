@@ -25,6 +25,7 @@ public static class ApplicationServiceExtensions
             });
         });
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(List.Handler).Assembly));
+        //services.AddMediatR(typeof(List.Handler));
         services.AddAutoMapper(typeof(MappingProfiles).Assembly);
         services.AddScoped<Conversions, Conversions>();
         

@@ -1,3 +1,5 @@
+
+
 using Domain;
 using Domain.Models;
 using MediatR;
@@ -20,8 +22,40 @@ public class Create
         {
             _context = context;
         }
+
+     public async Task Handle(Command request, CancellationToken cancellationToken)
+     {
+         // Step 1: Add the Ingredient and save to generate its ID
+         _context.Ingredients.Add(request.Ingredient);
+         //await _context.SaveChangesAsync(cancellationToken); // Generate Ingredient.Id here
+
+         // Step 2: Handle MeasurementUnit
+         if (request.Ingredient.MeasurementUnit != null)
+         {
+             if (request.Ingredient.MeasurementUnit.IngredientId == null)
+             {
+                 request.Ingredient.MeasurementUnit.IngredientId = request.Ingredient.Id;
+             }
+             _context.MeasurementUnits.Add(request.Ingredient.MeasurementUnit);
+         }
+
+         // Step 3: Handle NutritionalInfo
+         if (request.Ingredient.Nutrition != null)
+         {
+             if (request.Ingredient.Nutrition.IngredientId == null)
+             {
+                 request.Ingredient.Nutrition.IngredientId = request.Ingredient.Id;
+             }
+             _context.NutritionalInfos.Add(request.Ingredient.Nutrition);
+         }
+
+         // Step 4: Save changes to the related entities
+         await _context.SaveChangesAsync(cancellationToken);
+     }
+
+
         
-        public async Task Handle(Command request, CancellationToken cancellationToken)
+   /*      public async Task Handle(Command request, CancellationToken cancellationToken)
         {
             // Step 1: Add the Ingredient and save to generate its ID
             _context.Ingredients.Add(request.Ingredient);
@@ -43,6 +77,6 @@ public class Create
 
             // Step 4: Save changes to the related entities
             await _context.SaveChangesAsync(cancellationToken);
-        }
+        } */
     }
 }
