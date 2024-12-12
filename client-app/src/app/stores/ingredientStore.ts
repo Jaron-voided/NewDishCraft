@@ -9,7 +9,7 @@ export default class IngredientStore {
     selectedIngredient: Ingredient | undefined = undefined;
     editMode = false;
     loading = false;
-    loadingInitial = true;
+    loadingInitial = false;
 
     constructor() {
         makeAutoObservable(this)
@@ -20,10 +20,12 @@ export default class IngredientStore {
     }
 
     loadIngredients = async () => {
+        this.setLoadingInitial(true);
         try {
             const ingredients = await agent.Ingredients.list();
             ingredients.forEach(ingredient => {
-                this.ingredientRegistry.set(ingredient.id, ingredient);
+             /*   this.ingredientRegistry.set(ingredient.id, ingredient);*/
+                this.setIngredient(ingredient);
             })
 
             this.setLoadingInitial(false);
@@ -34,12 +36,41 @@ export default class IngredientStore {
         }
     };
 
+    loadIngredient = async (id: string) => {
+        let ingredient = this.getIngredient(id);
+        if (ingredient) {
+            this.selectedIngredient = ingredient;
+            return ingredient;
+        }
+        else {
+            this.setLoadingInitial(true);
+            try {
+                ingredient = await agent.Ingredients.details(id);
+                this.setIngredient(ingredient);
+                runInAction(() => this.selectedIngredient = ingredient);
+                this.setLoadingInitial(false);
+                return ingredient;
+            } catch (error) {
+                console.log(error);
+                this.setLoadingInitial(false);
+            }
+        }
+    }
+
+    private setIngredient = (ingredient: Ingredient) => {
+        this.ingredientRegistry.set(ingredient.id, ingredient);
+    }
+
+    private getIngredient = (id: string) => {
+        return this.ingredientRegistry.get(id);
+    }
+
 
     setLoadingInitial = (state: boolean) => {
         this.loadingInitial = state;
     }
 
-    selectIngredient = (id: string) => {
+/*    selectIngredient = (id: string) => {
         this.selectedIngredient = this.ingredientRegistry.get(id);
     }
 
@@ -58,7 +89,7 @@ export default class IngredientStore {
 
     closeForm = () => {
         this.editMode = false;
-    }
+    }*/
 
     createIngredient = async (ingredient: Ingredient) => {
         this.loading = true;
@@ -129,7 +160,7 @@ export default class IngredientStore {
             await agent.Ingredients.delete(id);
             runInAction(() => {
                 this.ingredientRegistry.delete(id);
-                if (this.selectedIngredient?.id === id) this.cancelSelectedIngredient();
+               /* if (this.selectedIngredient?.id === id) this.cancelSelectedIngredient();*/
                 this.loading = false;
             })
         } catch (error) {

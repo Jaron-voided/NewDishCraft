@@ -1,13 +1,43 @@
-import {useState, ChangeEvent, FormEvent, SyntheticEvent} from "react";
+import {useState, ChangeEvent, FormEvent, SyntheticEvent, useEffect} from "react";
 import {Button, Form, Segment, Dropdown, DropdownProps, CheckboxProps} from "semantic-ui-react";
-import {IngredientCategory, MeasuredIn, VolumeUnit, WeightUnit} from "../../../app/models/ingredient.ts";
+import {Ingredient, IngredientCategory, MeasuredIn, VolumeUnit, WeightUnit} from "../../../app/models/ingredient.ts";
 import {useStore} from "../../../app/stores/store.ts";
 import {observer} from "mobx-react-lite";
+import {Link, useNavigate, useParams} from "react-router-dom";
+import LoadingComponent from "../../../app/layout/LoadingComponent.tsx";
+import {v4 as uuid} from "uuid";
 
 export default observer(function IngredientForm() {
     const {ingredientStore} = useStore();
-    const {selectedIngredient, closeForm, createIngredient, updateIngredient, loading} = ingredientStore;
+    const {
+        createIngredient, updateIngredient, loading, loadIngredient, loadingInitial
+    } = ingredientStore;
 
+    const {id} = useParams();
+    const navigate = useNavigate();
+
+    const [ingredient, setIngredient] = useState<Ingredient>({
+        id: '',
+        name: '',
+        category: IngredientCategory.Spice, // Default to Spice
+        pricePerPackage: 0,
+        measurementsPerPackage: 0,
+        measurementUnit: {
+            ingredientId: '', // Default to empty string
+            measuredIn: MeasuredIn.Weight, // Default to Weight
+            weightUnit: undefined,
+            volumeUnit: undefined,
+        },
+        nutrition: {
+            ingredientId: '', // Default to empty string
+            calories: 0,
+            protein: 0,
+            carbs: 0,
+            fat: 0,
+        },
+    })
+
+/*
     const initialState = selectedIngredient ?? {
         id: '',
         name: '',
@@ -28,15 +58,20 @@ export default observer(function IngredientForm() {
             fat: 0,
         },
     };
+*/
 
-
-    const [ingredient, setIngredient] = useState(initialState);
+    useEffect(() => {
+        if (id) {
+            loadIngredient(id).then(ingredient => setIngredient(ingredient!));
+        }
+    }, [id, loadIngredient]);
 
     function handleSubmit() {
-        if (ingredient.id) {
-            updateIngredient(ingredient);
+        if (!ingredient.id) {
+            ingredient.id = uuid();
+            createIngredient(ingredient).then(() => navigate(`/ingredients/${ingredient.id}`))
         } else {
-            createIngredient(ingredient);
+            updateIngredient(ingredient).then(() => navigate(`/ingredients/${ingredient.id}`))
         }
     }
 
@@ -115,6 +150,7 @@ export default observer(function IngredientForm() {
         value: unit,
     }));
 
+    if (loadingInitial) return <LoadingComponent content='Loading Ingredient...' />
 
     return (
         <Segment clearing>
@@ -286,7 +322,7 @@ export default observer(function IngredientForm() {
                     content="Submit"
                 />
                 <Button
-                    onClick={closeForm}
+                    as={Link} to='/ingredients'
                     floated="right"
                     type="button"
                     content="Cancel"

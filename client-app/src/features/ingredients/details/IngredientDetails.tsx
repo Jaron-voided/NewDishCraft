@@ -1,14 +1,22 @@
 import {Card, Image, CardContent, CardDescription, CardHeader, CardMeta, Button} from "semantic-ui-react";
 import {useStore} from "../../../app/stores/store.ts";
 import LoadingComponent from "../../../app/layout/LoadingComponent.tsx";
+import {observer} from "mobx-react-lite";
+import {Link, useParams} from "react-router-dom";
+import {useEffect} from "react";
 
 
 
-export default function IngredientDetails() {
+export default observer(function IngredientDetails() {
     const {ingredientStore} = useStore();
-    const {selectedIngredient: ingredient, openForm, cancelSelectedIngredient} = ingredientStore;
+    const {selectedIngredient: ingredient, loadIngredient, loadingInitial} = ingredientStore;
+    const {id} = useParams();
 
-    if (!ingredient) return <LoadingComponent />;
+    useEffect(() => {
+        if (id) loadIngredient(id);
+    }, [id, loadIngredient]);
+
+    if (loadingInitial || !ingredient) return <LoadingComponent />;
 
     return (
         <Card fluid>
@@ -60,13 +68,13 @@ export default function IngredientDetails() {
             <CardContent extra>
                 <Button.Group widths='2'>
                     <Button
+                        as={Link} to={`/manage/${ingredient.id}`}
                         basic
-                        onClick={() => openForm(ingredient.id)}
                         color='teal'
                         content='Edit'
                     />
                     <Button
-                        onClick={cancelSelectedIngredient}
+                        as={Link} to='/ingredients'
                         basic
                         color='grey'
                         content='Cancel'
@@ -75,4 +83,4 @@ export default function IngredientDetails() {
             </CardContent>
         </Card>
     )
-}
+})

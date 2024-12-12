@@ -2,6 +2,7 @@ import {Segment, Item, Button, Header/*, Divider*/} from "semantic-ui-react";
 import {SyntheticEvent, useState} from "react";
 import {useStore} from "../../../app/stores/store.ts";
 import {observer} from "mobx-react-lite";
+import {Link} from "react-router-dom";
 
 
 export default observer(function IngredientList() {
@@ -28,7 +29,7 @@ export default observer(function IngredientList() {
                                     {ingredient.name}
                                 </Header>
                                 <Button
-                                    onClick={() => ingredientStore.selectIngredient(ingredient.id)}
+                                    as={Link} to={`/ingredients/${ingredient.id}`}
                                     floated='right'
                                     color="blue"
                                     content="View"
