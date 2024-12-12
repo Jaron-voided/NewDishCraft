@@ -1,14 +1,15 @@
 import {Card, Image, CardContent, CardDescription, CardHeader, CardMeta, Button} from "semantic-ui-react";
-import {Ingredient} from "../../../app/models/ingredient.ts";
+import {useStore} from "../../../app/stores/store.ts";
+import LoadingComponent from "../../../app/layout/LoadingComponent.tsx";
 
-interface Props {
-    ingredient: Ingredient;
-    cancelSelectIngredient: () => void;
-    openForm: (id: string) => void;
-}
 
-export default function IngredientDetails({ingredient, cancelSelectIngredient, openForm}:
-    Props) {
+
+export default function IngredientDetails() {
+    const {ingredientStore} = useStore();
+    const {selectedIngredient: ingredient, openForm, cancelSelectedIngredient} = ingredientStore;
+
+    if (!ingredient) return <LoadingComponent />;
+
     return (
         <Card fluid>
             <Image src={`/assets/categoryImages/${ingredient.category}.jpg`}/>
@@ -55,7 +56,6 @@ export default function IngredientDetails({ingredient, cancelSelectIngredient, o
                         </div>
                     )}
                 </CardDescription>
-
             </CardContent>
             <CardContent extra>
                 <Button.Group widths='2'>
@@ -66,7 +66,7 @@ export default function IngredientDetails({ingredient, cancelSelectIngredient, o
                         content='Edit'
                     />
                     <Button
-                        onClick={cancelSelectIngredient}
+                        onClick={cancelSelectedIngredient}
                         basic
                         color='grey'
                         content='Cancel'

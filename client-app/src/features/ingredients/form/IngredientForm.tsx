@@ -1,15 +1,13 @@
 import {useState, ChangeEvent, FormEvent, SyntheticEvent} from "react";
 import {Button, Form, Segment, Dropdown, DropdownProps, CheckboxProps} from "semantic-ui-react";
-import {Ingredient, IngredientCategory, MeasuredIn, VolumeUnit, WeightUnit} from "../../../app/models/ingredient.ts";
+import {IngredientCategory, MeasuredIn, VolumeUnit, WeightUnit} from "../../../app/models/ingredient.ts";
+import {useStore} from "../../../app/stores/store.ts";
+import {observer} from "mobx-react-lite";
 
-interface Props {
-    ingredient: Ingredient | undefined;
-    closeForm: () => void;
-    createOrEdit: (ingredient: Ingredient) => void;
-    submitting: boolean;
-}
+export default observer(function IngredientForm() {
+    const {ingredientStore} = useStore();
+    const {selectedIngredient, closeForm, createIngredient, updateIngredient, loading} = ingredientStore;
 
-export default function IngredientForm({ingredient: selectedIngredient, closeForm, createOrEdit, submitting}: Props) {
     const initialState = selectedIngredient ?? {
         id: '',
         name: '',
@@ -35,7 +33,11 @@ export default function IngredientForm({ingredient: selectedIngredient, closeFor
     const [ingredient, setIngredient] = useState(initialState);
 
     function handleSubmit() {
-        createOrEdit(ingredient);
+        if (ingredient.id) {
+            updateIngredient(ingredient);
+        } else {
+            createIngredient(ingredient);
+        }
     }
 
     function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
@@ -277,7 +279,7 @@ export default function IngredientForm({ingredient: selectedIngredient, closeFor
 
                 {/* Submit and Cancel Buttons */}
                 <Button
-                    loading={submitting}
+                    loading={loading}
                     floated="right"
                     positive
                     type="submit"
@@ -290,7 +292,6 @@ export default function IngredientForm({ingredient: selectedIngredient, closeFor
                     content="Cancel"
                 />
             </Form>
-
         </Segment>
     );
-}
+})

@@ -1,0 +1,142 @@
+import {makeAutoObservable, runInAction} from "mobx";
+import {Ingredient, MeasuredIn} from "../models/ingredient.ts";
+import agent from "../api/agent.ts";
+import {v4 as uuid} from 'uuid';
+
+export default class IngredientStore {
+
+    ingredientRegistry = new Map<string, Ingredient>();
+    selectedIngredient: Ingredient | undefined = undefined;
+    editMode = false;
+    loading = false;
+    loadingInitial = true;
+
+    constructor() {
+        makeAutoObservable(this)
+    }
+
+    get ingredientsByPrice() {
+        return Array.from(this.ingredientRegistry.values()).sort((a, b) => a.pricePerPackage - b.pricePerPackage);
+    }
+
+    loadIngredients = async () => {
+        try {
+            const ingredients = await agent.Ingredients.list();
+            ingredients.forEach(ingredient => {
+                this.ingredientRegistry.set(ingredient.id, ingredient);
+            })
+
+            this.setLoadingInitial(false);
+
+        } catch (error) {
+            console.log(error);
+            runInAction(() => this.setLoadingInitial(false));
+        }
+    };
+
+
+    setLoadingInitial = (state: boolean) => {
+        this.loadingInitial = state;
+    }
+
+    selectIngredient = (id: string) => {
+        this.selectedIngredient = this.ingredientRegistry.get(id);
+    }
+
+    cancelSelectedIngredient = () => {
+        this.selectedIngredient = undefined;
+    }
+
+    openForm = (id?: string) => {
+        if (id) {
+            this.selectIngredient(id);
+        } else {
+            this.cancelSelectedIngredient();
+        }
+        this.editMode = true;
+    }
+
+    closeForm = () => {
+        this.editMode = false;
+    }
+
+    createIngredient = async (ingredient: Ingredient) => {
+        this.loading = true;
+
+        try {
+            ingredient.id = uuid();
+            // Ensure nutrition is initialized
+            if (!ingredient.nutrition) {
+                ingredient.nutrition = {
+                    ingredientId: ingredient.id,
+                    calories: 0,
+                    protein: 0,
+                    carbs: 0,
+                    fat: 0,
+                };
+            } else {
+                ingredient.nutrition.ingredientId = ingredient.id;
+            }
+
+            // Ensure measurementUnit is initialized
+            if (!ingredient.measurementUnit) {
+                ingredient.measurementUnit = {
+                    ingredientId: ingredient.id,
+                    measuredIn: MeasuredIn.Weight, // Default to Weight
+                    weightUnit: undefined,
+                    volumeUnit: undefined,
+                };
+            } else {
+                ingredient.measurementUnit.ingredientId = ingredient.id;
+            }
+
+            await agent.Ingredients.create(ingredient);
+            runInAction(() => {
+                this.ingredientRegistry.set(ingredient.id, ingredient);
+                this.selectedIngredient = ingredient;
+                this.editMode = false;
+                this.loading = false;
+            })
+        } catch (error) {
+            console.log(error);
+            runInAction(() => {
+                this.loading = false;
+            })
+        }
+    }
+
+    updateIngredient = async (ingredient: Ingredient) => {
+        this.loading = true;
+        try {
+            await agent.Ingredients.update(ingredient);
+            runInAction(() => {
+                this.ingredientRegistry.set(ingredient.id, ingredient);
+                this.selectedIngredient = ingredient;
+                this.editMode = false;
+                this.loading = false;
+            })
+        } catch (error) {
+            console.log(error);
+            runInAction(() => {
+                this.loading = false;
+            })
+        }
+    }
+
+    deleteIngredient = async (id: string) => {
+        this.loading = true;
+        try {
+            await agent.Ingredients.delete(id);
+            runInAction(() => {
+                this.ingredientRegistry.delete(id);
+                if (this.selectedIngredient?.id === id) this.cancelSelectedIngredient();
+                this.loading = false;
+            })
+        } catch (error) {
+            console.log(error);
+            runInAction(() => {
+                this.loading = false;
+            })
+        }
+    }
+}

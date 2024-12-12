@@ -1,26 +1,25 @@
-import {Ingredient} from "../../../app/models/ingredient.ts";
 import {Segment, Item, Button, Header/*, Divider*/} from "semantic-ui-react";
 import {SyntheticEvent, useState} from "react";
+import {useStore} from "../../../app/stores/store.ts";
+import {observer} from "mobx-react-lite";
 
-interface Props {
-    ingredients: Ingredient[];
-    selectIngredient: (id: string) => void;
-    deleteIngredient: (id: string) => void;
-    submitting: boolean;
-}
 
-export default function IngredientList({ingredients, selectIngredient, deleteIngredient, submitting}: Props) {
+export default observer(function IngredientList() {
+    const {ingredientStore} = useStore();
+    const {deleteIngredient, ingredientsByPrice, loading} = ingredientStore;
+
     const [target, setTarget] = useState('');
 
-    function handleIngredientDelete(e: SyntheticEvent<HTML>, id: string) {
+    function handleIngredientDelete(e: SyntheticEvent<HTMLButtonElement>, id: string) {
         setTarget(e.currentTarget.name);
         deleteIngredient(id);
     }
 
+
     return (
         <Segment>
             <Item.Group divided>
-                {ingredients.map(ingredient => (
+                {ingredientsByPrice.map(ingredient => (
                     <Item key={ingredient.id} style={{marginBottom: "2em", padding: "1em", border: "1px solid #ccc", borderRadius: "8px"}}>
                         <Item.Content>
                             {/* Header Section */}
@@ -29,7 +28,7 @@ export default function IngredientList({ingredients, selectIngredient, deleteIng
                                     {ingredient.name}
                                 </Header>
                                 <Button
-                                    onClick={() => selectIngredient(ingredient.id)}
+                                    onClick={() => ingredientStore.selectIngredient(ingredient.id)}
                                     floated='right'
                                     color="blue"
                                     content="View"
@@ -37,7 +36,7 @@ export default function IngredientList({ingredients, selectIngredient, deleteIng
                                 <Button
                                     onClick={(e) => handleIngredientDelete(e, ingredient.id)}
                                     name={ingredient.id}
-                                    loading={submitting && target === ingredient.id}
+                                    loading={loading && target === ingredient.id}
                                     floated='right'
                                     color="red"
                                     content="Delete"
@@ -55,4 +54,4 @@ export default function IngredientList({ingredients, selectIngredient, deleteIng
             </Item.Group>
         </Segment>
     );
-}
+})

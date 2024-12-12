@@ -5,43 +5,35 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ca248edd-2a8f-440a-bbd9-74d99b6cebba" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/client-app/src/app/layout/main/NavBar.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client-app/src/app/layout/styles.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client-app/src/app/models/ingredient.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client-app/src/features/ingredients/dashboard/IngredientDashboard.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client-app/src/features/ingredients/dashboard/IngredientList.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client-app/src/features/ingredients/details/IngredientDetails.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client-app/src/features/ingredients/form/IngredientForm.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-app/src/app/stores/ingredientStore.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-app/src/app/stores/store.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/Extensions/ApplicationServiceExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/API/Extensions/ApplicationServiceExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/API/Program.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/API/obj/Debug/net8.0/API.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/API/obj/Debug/net8.0/API.AssemblyInfo.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/API/obj/Debug/net8.0/API.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/API/obj/Debug/net8.0/API.AssemblyInfoInputs.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/API/obj/Debug/net8.0/API.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/API/obj/Debug/net8.0/API.csproj.AssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/API/obj/rider.project.model.nuget.info" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/API/obj/rider.project.restore.info" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/pantry.db" beforeDir="false" afterPath="$PROJECT_DIR$/API/pantry.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/Ingredients/Create.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Ingredients/Create.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/pantry.db" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Application/obj/Debug/net8.0/Application.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/obj/Debug/net8.0/Application.AssemblyInfo.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Application/obj/Debug/net8.0/Application.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Application/obj/Debug/net8.0/Application.AssemblyInfoInputs.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Application/obj/Debug/net8.0/Application.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Application/obj/Debug/net8.0/Application.csproj.AssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/Application/obj/rider.project.model.nuget.info" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/Application/obj/rider.project.restore.info" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Domain/obj/Debug/net8.0/Domain.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/obj/Debug/net8.0/Domain.AssemblyInfo.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Domain/obj/Debug/net8.0/Domain.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/obj/Debug/net8.0/Domain.AssemblyInfoInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domain/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/obj/rider.project.model.nuget.info" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Domain/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/obj/rider.project.restore.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Persistence/Migrations/20241201183508_InitialCreate.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Persistence/Migrations/20241201183508_InitialCreate.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Persistence/Seed.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Persistence/Seed.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Persistence/obj/Debug/net8.0/Persistence.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Persistence/obj/Debug/net8.0/Persistence.AssemblyInfo.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Persistence/obj/Debug/net8.0/Persistence.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Persistence/obj/Debug/net8.0/Persistence.AssemblyInfoInputs.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Persistence/obj/Debug/net8.0/Persistence.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Persistence/obj/Debug/net8.0/Persistence.csproj.AssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Persistence/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/Persistence/obj/rider.project.model.nuget.info" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Persistence/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/Persistence/obj/rider.project.restore.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TODO" beforeDir="false" afterPath="$PROJECT_DIR$/TODO" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/eslint.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/eslint.config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client-app/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client-app/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/api/agent.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/layout/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/assets/react.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/layout/LoadingComponents.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/app/layout/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/layout/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/app/layout/LoadingComponents.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/layout/LoadingComponent.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/app/layout/main/NavBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/layout/main/NavBar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/features/ingredients/dashboard/IngredientDashboard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/features/ingredients/dashboard/IngredientDashboard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/features/ingredients/dashboard/IngredientList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/features/ingredients/dashboard/IngredientList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/features/ingredients/details/IngredientDetails.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/features/ingredients/details/IngredientDetails.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/features/ingredients/form/IngredientForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/features/ingredients/form/IngredientForm.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client-app/src/main.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/main.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -52,8 +44,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="TypeScript File" />
         <option value="TypeScript JSX File" />
+        <option value="TypeScript File" />
       </list>
     </option>
   </component>
@@ -81,6 +73,11 @@
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;ts.external.directory.path&quot;: &quot;/home/zeref-dragneel/DishCraft/client-app/node_modules/typescript/lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;sqlite&quot;
+    ]
   }
 }</component>
   <component name="RecentsManager">
@@ -107,7 +104,10 @@
       <workItem from="1733095917447" duration="2236000" />
       <workItem from="1733347999308" duration="1580000" />
       <workItem from="1733349752887" duration="40533000" />
-      <workItem from="1733693935442" duration="6353000" />
+      <workItem from="1733693935442" duration="10369000" />
+      <workItem from="1733925062820" duration="5115000" />
+      <workItem from="1733946093529" duration="13061000" />
+      <workItem from="1734013940373" duration="960000" />
     </task>
     <servers />
   </component>

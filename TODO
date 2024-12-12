@@ -1,3 +1,36 @@
 
 
 Implement DTOs and enum helper class to serialize to string value instead of number
+
+1. IngredientList.tsx
+
+    Potential Issue: ingredients.map(ingredient => (...)) assumes ingredients is always an array. If it's undefined or null, it will throw an error.
+        Fix: Add a fallback: ingredients?.map(...) or ingredients.length > 0 ? ingredients.map(...) : <div>No ingredients available</div>.
+    Improvement: Add error handling for the deleteIngredient method. If an API call fails, the user might not know why the deletion didn't work.
+    Styling: Inline styles like style={{marginBottom: "2em", padding: "1em"}} could be moved to a CSS/SCSS file for maintainability.
+
+2. IngredientDetails.tsx
+
+    Potential Issue: ingredient.nutrition and ingredient.measurementUnit are accessed without checking if they're defined.
+        Fix: Use optional chaining or fallback values, e.g., ingredient.nutrition?.calories || 0.
+    Improvement: The Image component's src assumes the category matches a filename. Ensure there is error handling for missing or incorrect images.
+    UX: Add a confirmation dialog or feedback for the "Cancel" button to ensure users don't accidentally cancel changes.
+
+3. IngredientForm.tsx
+
+    Potential Issue: Non-null assertion (ingredient.nutrition!.calories) can cause runtime issues if nutrition is null or undefined.
+        Fix: Use a default object for nutrition in initialState or optional chaining (ingredient.nutrition?.calories).
+    Improvement: The handleInputChange function is verbose and could be simplified using dynamic property updates via [name]: value for both nutrition and ingredient.
+    Dropdowns: Ensure the dropdowns for category, weightUnit, and volumeUnit have proper error handling for invalid or undefined values.
+
+4. IngredientDashboard.tsx
+
+    Potential Issue: The conditional rendering (selectedIngredient && !editMode) relies on both variables being set correctly. Ensure proper defaults for selectedIngredient and editMode.
+    Improvement: If the selected ingredient is undefined, a fallback message or loading spinner could improve UX.
+    Code Readability: The inline logic for conditional rendering might be extracted into separate functions for clarity.
+
+General Suggestions
+
+    Error Handling: Add error boundaries or error states for API calls and undefined data to enhance robustness.
+    Code Readability: Extract inline styles to a CSS/SCSS file for better separation of concerns.
+    Type Safety: Ensure TypeScript types are used consistently to prevent runtime issues, especially for optional or nullable properties.

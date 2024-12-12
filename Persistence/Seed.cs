@@ -7,86 +7,95 @@ public class Seed
 {
     public static async Task SeedData(DataContext context)
     {
-        // Check if any data already exists
-        if (context.Ingredients.Any() || context.Recipes.Any() || context.Measurements.Any())
-            return;
-
         // Seed Ingredients
-        var flour = new Ingredient
+        var ingredients = new List<Ingredient>
         {
-            Id = Guid.NewGuid(),
-            Name = "Flour",
-            Category = Categories.IngredientCategory.Baking,
-            PricePerPackage = 2.50m,
-            MeasurementsPerPackage = 1000
+            new Ingredient
+            {
+                Id = Guid.NewGuid(),
+                Name = "Flour",
+                Category = Categories.IngredientCategory.Baking,
+                PricePerPackage = 2.50m,
+                MeasurementsPerPackage = 1000
+            },
+            new Ingredient
+            {
+                Id = Guid.NewGuid(),
+                Name = "Milk",
+                Category = Categories.IngredientCategory.Dairy,
+                PricePerPackage = 1.20m,
+                MeasurementsPerPackage = 1000
+            },
+            new Ingredient
+            {
+                Id = Guid.NewGuid(),
+                Name = "Eggs",
+                Category = Categories.IngredientCategory.Dairy,
+                PricePerPackage = 3.00m,
+                MeasurementsPerPackage = 12
+            },
+            new Ingredient
+            {
+                Id = Guid.NewGuid(),
+                Name = "Sugar",
+                Category = Categories.IngredientCategory.Baking,
+                PricePerPackage = 1.50m,
+                MeasurementsPerPackage = 500
+            }
         };
 
-        var milk = new Ingredient
+        foreach (var ingredient in ingredients)
         {
-            Id = Guid.NewGuid(),
-            Name = "Milk",
-            Category = Categories.IngredientCategory.Dairy,
-            PricePerPackage = 1.20m,
-            MeasurementsPerPackage = 1000
-        };
-
-        var eggs = new Ingredient
-        {
-            Id = Guid.NewGuid(),
-            Name = "Eggs",
-            Category = Categories.IngredientCategory.Dairy,
-            PricePerPackage = 3.00m,
-            MeasurementsPerPackage = 12
-        };
-
-        var sugar = new Ingredient
-        {
-            Id = Guid.NewGuid(),
-            Name = "Sugar",
-            Category = Categories.IngredientCategory.Baking,
-            PricePerPackage = 1.50m,
-            MeasurementsPerPackage = 500
-        };
-
-        var ingredients = new List<Ingredient> { flour, milk, eggs, sugar };
-        await context.Ingredients.AddRangeAsync(ingredients);
-        await context.SaveChangesAsync(); // Save Ingredients to generate IDs
+            if (!context.Ingredients.Any(i => i.Name == ingredient.Name))
+            {
+                await context.Ingredients.AddAsync(ingredient);
+            }
+        }
+        await context.SaveChangesAsync();
 
         // Seed MeasurementUnits
         var measurementUnits = new List<MeasurementUnit>
         {
             new MeasurementUnit
             {
-                IngredientId = flour.Id,
+                IngredientId = context.Ingredients.First(i => i.Name == "Flour").Id,
                 MeasuredIn = MeasuredIn.Weight,
                 WeightUnit = WeightUnit.Kilograms
             },
             new MeasurementUnit
             {
-                IngredientId = milk.Id,
+                IngredientId = context.Ingredients.First(i => i.Name == "Milk").Id,
                 MeasuredIn = MeasuredIn.Volume,
                 VolumeUnit = VolumeUnit.Liters
             },
             new MeasurementUnit
             {
-                IngredientId = eggs.Id,
+                IngredientId = context.Ingredients.First(i => i.Name == "Eggs").Id,
                 MeasuredIn = MeasuredIn.Each
             },
             new MeasurementUnit
             {
-                IngredientId = sugar.Id,
+                IngredientId = context.Ingredients.First(i => i.Name == "Sugar").Id,
                 MeasuredIn = MeasuredIn.Weight,
                 WeightUnit = WeightUnit.Pounds
             }
         };
-        await context.MeasurementUnits.AddRangeAsync(measurementUnits);
+
+        foreach (var unit in measurementUnits)
+        {
+            if (!context.MeasurementUnits.Any(mu => mu.IngredientId == unit.IngredientId))
+            {
+                await context.MeasurementUnits.AddAsync(unit);
+            }
+        }
+        await context.SaveChangesAsync();
 
         // Seed NutritionalInfo
         var nutritionalInfos = new List<NutritionalInfo>
         {
             new NutritionalInfo
             {
-                IngredientId = flour.Id,
+                IngredientId = context.Ingredients.First(i => i.Name == "Flour").Id,
                 Calories = 364,
                 Carbs = 76,
                 Fat = 1,
@@ -94,7 +103,7 @@ public class Seed
             },
             new NutritionalInfo
             {
-                IngredientId = milk.Id,
+                IngredientId = context.Ingredients.First(i => i.Name == "Milk").Id,
                 Calories = 42,
                 Carbs = 5,
                 Fat = 1,
@@ -102,7 +111,7 @@ public class Seed
             },
             new NutritionalInfo
             {
-                IngredientId = eggs.Id,
+                IngredientId = context.Ingredients.First(i => i.Name == "Eggs").Id,
                 Calories = 155,
                 Carbs = 1,
                 Fat = 11,
@@ -110,14 +119,21 @@ public class Seed
             },
             new NutritionalInfo
             {
-                IngredientId = sugar.Id,
+                IngredientId = context.Ingredients.First(i => i.Name == "Sugar").Id,
                 Calories = 387,
                 Carbs = 100,
                 Fat = 0,
                 Protein = 0
             }
         };
-        await context.NutritionalInfos.AddRangeAsync(nutritionalInfos);
+
+        foreach (var nutrition in nutritionalInfos)
+        {
+            if (!context.NutritionalInfos.Any(ni => ni.IngredientId == nutrition.IngredientId))
+            {
+                await context.NutritionalInfos.AddAsync(nutrition);
+            }
+        }
         await context.SaveChangesAsync();
 
         // Seed Recipes
@@ -163,7 +179,14 @@ public class Seed
                 }
             }
         };
-        await context.Recipes.AddRangeAsync(recipes);
+
+        foreach (var recipe in recipes)
+        {
+            if (!context.Recipes.Any(r => r.Name == recipe.Name))
+            {
+                await context.Recipes.AddAsync(recipe);
+            }
+        }
         await context.SaveChangesAsync();
 
         // Seed Measurements
@@ -172,68 +195,75 @@ public class Seed
             new Measurement
             {
                 Id = Guid.NewGuid(),
-                RecipeId = recipes[0].Id,
-                IngredientId = flour.Id,
+                RecipeId = context.Recipes.First(r => r.Name == "Pancakes").Id,
+                IngredientId = context.Ingredients.First(i => i.Name == "Flour").Id,
                 Amount = 200
             },
             new Measurement
             {
                 Id = Guid.NewGuid(),
-                RecipeId = recipes[0].Id,
-                IngredientId = milk.Id,
+                RecipeId = context.Recipes.First(r => r.Name == "Pancakes").Id,
+                IngredientId = context.Ingredients.First(i => i.Name == "Milk").Id,
                 Amount = 300
             },
             new Measurement
             {
                 Id = Guid.NewGuid(),
-                RecipeId = recipes[0].Id,
-                IngredientId = eggs.Id,
+                RecipeId = context.Recipes.First(r => r.Name == "Pancakes").Id,
+                IngredientId = context.Ingredients.First(i => i.Name == "Eggs").Id,
                 Amount = 2
             },
             new Measurement
             {
                 Id = Guid.NewGuid(),
-                RecipeId = recipes[0].Id,
-                IngredientId = sugar.Id,
+                RecipeId = context.Recipes.First(r => r.Name == "Pancakes").Id,
+                IngredientId = context.Ingredients.First(i => i.Name == "Sugar").Id,
                 Amount = 50
             },
             new Measurement
             {
                 Id = Guid.NewGuid(),
-                RecipeId = recipes[1].Id,
-                IngredientId = eggs.Id,
+                RecipeId = context.Recipes.First(r => r.Name == "Scrambled Eggs").Id,
+                IngredientId = context.Ingredients.First(i => i.Name == "Eggs").Id,
                 Amount = 4
             },
             new Measurement
             {
                 Id = Guid.NewGuid(),
-                RecipeId = recipes[1].Id,
-                IngredientId = milk.Id,
+                RecipeId = context.Recipes.First(r => r.Name == "Scrambled Eggs").Id,
+                IngredientId = context.Ingredients.First(i => i.Name == "Milk").Id,
                 Amount = 50
             },
             new Measurement
             {
                 Id = Guid.NewGuid(),
-                RecipeId = recipes[2].Id,
-                IngredientId = flour.Id,
+                RecipeId = context.Recipes.First(r => r.Name == "Sugar Cookies").Id,
+                IngredientId = context.Ingredients.First(i => i.Name == "Flour").Id,
                 Amount = 300
             },
             new Measurement
             {
                 Id = Guid.NewGuid(),
-                RecipeId = recipes[2].Id,
-                IngredientId = sugar.Id,
+                RecipeId = context.Recipes.First(r => r.Name == "Sugar Cookies").Id,
+                IngredientId = context.Ingredients.First(i => i.Name == "Sugar").Id,
                 Amount = 150
             },
             new Measurement
             {
                 Id = Guid.NewGuid(),
-                RecipeId = recipes[2].Id,
-                IngredientId = eggs.Id,
+                RecipeId = context.Recipes.First(r => r.Name == "Sugar Cookies").Id,
+                IngredientId = context.Ingredients.First(i => i.Name == "Eggs").Id,
                 Amount = 1
             }
         };
-        await context.Measurements.AddRangeAsync(measurements);
+
+        foreach (var measurement in measurements)
+        {
+            if (!context.Measurements.Any(m => m.RecipeId == measurement.RecipeId && m.IngredientId == measurement.IngredientId))
+            {
+                await context.Measurements.AddAsync(measurement);
+            }
+        }
         await context.SaveChangesAsync();
     }
 }
