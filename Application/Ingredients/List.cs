@@ -1,3 +1,4 @@
+using Application.Core;
 using Domain;
 using Domain.Models;
 using MediatR;
@@ -9,11 +10,11 @@ namespace Application.Ingredients;
 
 public class List
 {
-    public class Query : IRequest<List<Ingredient>>
+    public class Query : IRequest<Result<List<Ingredient>>>
     {
     }
 
-    public class Handler : IRequestHandler<Query, List<Ingredient>>
+    public class Handler : IRequestHandler<Query, Result<List<Ingredient>>>
     {
         private readonly DataContext _context;
 
@@ -22,12 +23,12 @@ public class List
             _context = context;
         }
         
-        public async Task<List<Ingredient>> Handle(Query request, CancellationToken cancellationToken)
+        public async Task<Result<List<Ingredient>>> Handle(Query request, CancellationToken cancellationToken)
         {
-            return await _context.Ingredients
+            return Result<List<Ingredient>>.Success(await _context.Ingredients
                 .Include(i => i.Nutrition)
                 .Include(i => i.MeasurementUnit)
-                .ToListAsync();
+                .ToListAsync());
         }
     }
 }

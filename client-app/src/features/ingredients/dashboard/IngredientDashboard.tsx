@@ -5,6 +5,7 @@ import {useStore} from "../../../app/stores/store.ts";
 import {observer} from "mobx-react-lite";
 import {useEffect} from "react";
 import LoadingComponent from "../../../app/layout/LoadingComponent.tsx";
+import IngredientFilters from "./IngredientFilters.tsx";
 
 
 export default observer(function IngredientDashboard() {
@@ -27,7 +28,7 @@ export default observer(function IngredientDashboard() {
                 <IngredientList />
            </Grid.Column>
             <Grid.Column width='6'>
-                <h2>Ingredient Filters</h2>
+                <IngredientFilters />
             </Grid.Column>
         </Grid>
     )

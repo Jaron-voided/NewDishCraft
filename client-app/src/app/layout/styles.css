@@ -5,3 +5,90 @@ body {
 .ui.inverted.top.fixed.menus {
     background-image: linear-gradient(135deg, rgb(24,42,115) 0%, rgb(33, 138, 174) 69%, rgb(32, 167, 172) 89%) !important;
 }
+
+.react-calendar {
+    width: 100%;
+    border: none;
+    box-shadow: 0 1px 2px 0 rgb(34,36,38,.15);
+}
+
+/*home page styles*/
+
+.masthead {
+    display: flex;
+    align-items: center;
+    background-image: linear-gradient(
+            135deg,
+            rgb(24, 42, 115) 0%,
+            rgb(33, 138, 174) 69%,
+            rgb(32, 167, 172) 89%
+    ) !important;
+    height: 100vh;
+}
+
+.masthead .ui.menu .ui.button,
+.ui.menu a.ui.inverted.button {
+    margin-left: 0.5em;
+}
+
+.masthead h1.ui.header {
+    font-size: 4em;
+    font-weight: normal;
+}
+
+.masthead h2 {
+    font-size: 1.7em;
+    font-weight: normal;
+}
+/* new homepage styles*/
+.masthead .welcome-header {
+    font-size: 1.7em;
+    margin-bottom: 2em;
+}
+
+.masthead .header-image {
+    margin-bottom: 1em;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.masthead .header-title {
+    font-size: 3em;
+    margin-bottom: 1em;
+}
+
+/*end home page styles*/
+
+/*
+!*NavBar styling*!
+!* Increase navbar height and padding *!
+ui.menu.navbar {
+    height: 4em; !* Adjust the height as needed *!
+    font-size: 126em; !* Make text inside the navbar larger *!
+    display: flex;
+    align-items: center;
+}
+
+!* Adjust container padding inside the navbar *!
+ui.menu.navbar .container {
+    padding: 1.5em 1em;
+}
+
+!* Style the logo *!
+ui.menu.navbar .item img {
+    height: 50px; !* Adjust logo size *!
+    width: auto;
+    margin-right: 1em;
+}
+
+!* Style menu items *!
+ui.menu.navbar .item {
+    padding: 1em 1.5em; !* Increase padding for menu items *!
+}
+
+!* Style buttons inside the navbar *!
+ui.menu.navbar .button {
+    font-size: 126em; !* Increase button font size *!
+    padding: 0.8em 1.5em; !* Adjust button padding *!
+}
+*/

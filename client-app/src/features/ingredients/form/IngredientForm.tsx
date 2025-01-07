@@ -37,28 +37,6 @@ export default observer(function IngredientForm() {
         },
     })
 
-/*
-    const initialState = selectedIngredient ?? {
-        id: '',
-        name: '',
-        category: IngredientCategory.Spice, // Default to Spice
-        pricePerPackage: 0,
-        measurementsPerPackage: 0,
-        measurementUnit: {
-            ingredientId: '', // Default to empty string
-            measuredIn: MeasuredIn.Weight, // Default to Weight
-            weightUnit: undefined,
-            volumeUnit: undefined,
-        },
-        nutrition: {
-            ingredientId: '', // Default to empty string
-            calories: 0,
-            protein: 0,
-            carbs: 0,
-            fat: 0,
-        },
-    };
-*/
 
     useEffect(() => {
         if (id) {

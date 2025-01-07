@@ -12,39 +12,36 @@ public class IngredientsController : BaseApiController
 {
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Ingredient>>> GetIngredients()
+    public async Task<IActionResult> GetIngredients()
     {
-        return Ok(await Mediator.Send(new List.Query()));
+        return HandleResult(await Mediator.Send(new List.Query()));
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Ingredient>> GetIngredient(Guid id)
+    public async Task<IActionResult> GetIngredient(Guid id)
     {
-        /*
-        var ingredient = await _context.Ingredients.FindAsync(id);
-        */
-        return await Mediator.Send(new Details.Query {Id = id});
+        return HandleResult(await Mediator.Send(new Details.Query {Id = id}));
     }
 
     [HttpPost]
     public async Task<ActionResult<Ingredient>> CreateIngredient(Ingredient ingredient)
     {
-        await Mediator.Send(new Create.Command {Ingredient = ingredient});
-        return Ok();
+        return HandleResult(await Mediator.Send(new Create.Command { Ingredient = ingredient }));
+        /*await Mediator.Send(new Create.Command {Ingredient = ingredient});
+        return Ok();*/
     }
 
     [HttpPut("{id}")]
     public async Task<ActionResult<Ingredient>> EditIngredient(Guid id, Ingredient ingredient)
     {
         ingredient.Id = id;
-        await Mediator.Send(new Edit.Command {Ingredient = ingredient});
-        return Ok();
+        return HandleResult(await Mediator.Send(new Edit.Command {Ingredient = ingredient}));
     }
 
     [HttpDelete("{id}")]
     public async Task<ActionResult<Ingredient>> DeleteIngredient(Guid id)
     {
-        await Mediator.Send(new Delete.Command {Id = id});
-        return Ok();
+        return HandleResult(await Mediator.Send(new Delete.Command {Id = id}));
+        /*return Ok();*/
     }
 }

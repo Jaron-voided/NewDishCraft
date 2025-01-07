@@ -1,6 +1,8 @@
 using Application.Core;
 using Application.Ingredients;
 using Application.Utilities;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
@@ -28,6 +30,8 @@ public static class ApplicationServiceExtensions
         //services.AddMediatR(typeof(List.Handler));
         services.AddAutoMapper(typeof(MappingProfiles).Assembly);
         services.AddScoped<Conversions, Conversions>();
+        services.AddFluentValidationAutoValidation();
+        services.AddValidatorsFromAssemblyContaining<Create>();
         
         return services;
 

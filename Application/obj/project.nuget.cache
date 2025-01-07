@@ -1,11 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "XgmkTExlel9rJ62yvSQTj/TdoO/EIk0IxiGiXcdIjyWckcQUgdssV80lm9xIAEKfZ+AlK3CEdUqYlFjG4o/W9w==",
+  "dgSpecHash": "bqjGy0bJXorKc33AlsSDNyZuN7zx+8F1W17GP3Xz4wXxrbo8jPLF/AIJ1WA5hcpya0wDQomjV0fzvisOM5lccw==",
   "success": true,
   "projectFilePath": "/home/zeref-dragneel/DishCraft/Application/Application.csproj",
   "expectedPackageFiles": [
     "/home/zeref-dragneel/.nuget/packages/automapper/12.0.1/automapper.12.0.1.nupkg.sha512",
     "/home/zeref-dragneel/.nuget/packages/automapper.extensions.microsoft.dependencyinjection/12.0.1/automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
+    "/home/zeref-dragneel/.nuget/packages/fluentvalidation/11.5.1/fluentvalidation.11.5.1.nupkg.sha512",
+    "/home/zeref-dragneel/.nuget/packages/fluentvalidation.aspnetcore/11.3.0/fluentvalidation.aspnetcore.11.3.0.nupkg.sha512",
+    "/home/zeref-dragneel/.nuget/packages/fluentvalidation.dependencyinjectionextensions/11.5.1/fluentvalidation.dependencyinjectionextensions.11.5.1.nupkg.sha512",
     "/home/zeref-dragneel/.nuget/packages/mediatr/12.4.1/mediatr.12.4.1.nupkg.sha512",
     "/home/zeref-dragneel/.nuget/packages/mediatr.contracts/2.0.1/mediatr.contracts.2.0.1.nupkg.sha512",
     "/home/zeref-dragneel/.nuget/packages/microsoft.csharp/4.7.0/microsoft.csharp.4.7.0.nupkg.sha512",

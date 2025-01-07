@@ -1,6 +1,8 @@
+using Application.Core;
 using AutoMapper;
 using Domain;
 using Domain.Models;
+using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
@@ -9,12 +11,21 @@ namespace Application.Ingredients;
 
 public class Edit
 {
-    public class Command : IRequest
+    public class Command : IRequest<Result<Unit>>
     {
         public Ingredient Ingredient { get; set; }
     }
+    
+    public class CommandValidator : AbstractValidator<Command>
+    {
+        public CommandValidator()
+        {
+            RuleFor(x => x.Ingredient).SetValidator(new IngredientValidator());
+            
+        }
+    }
 
-    public class Handler : IRequestHandler<Command>
+    public class Handler : IRequestHandler<Command, Result<Unit>>
     {
         private readonly IMapper _mapper;
         private readonly DataContext _context;
@@ -25,7 +36,7 @@ public class Edit
             _mapper = mapper;
         }
 
-        public async Task Handle(Command request, CancellationToken cancellationToken)
+        public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
         {
             var ingredient = await _context.Ingredients
                 .Include(i => i.Nutrition)
@@ -33,7 +44,7 @@ public class Edit
                 .FirstOrDefaultAsync(i => i.Id == request.Ingredient.Id);
                 //.FindAsync(request.Ingredient.Id);
                 
-            if (ingredient == null) throw new Exception("Ingredient not found");
+            if (ingredient == null) return null;
             
             _mapper.Map(request.Ingredient, ingredient);
 
@@ -87,7 +98,12 @@ public class Edit
             }
 
             
-            await _context.SaveChangesAsync();
+            var result = await _context.SaveChangesAsync() > 0;
+            
+            if (!result) return Result<Unit>.Failure("Failed to update ingredient");
+            
+            return Result<Unit>.Success(Unit.Value);
+
         }
     }
 }

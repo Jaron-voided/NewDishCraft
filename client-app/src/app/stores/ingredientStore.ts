@@ -11,6 +11,7 @@ export default class IngredientStore {
     loading = false;
     loadingInitial = false;
 
+
     constructor() {
         makeAutoObservable(this)
     }
@@ -18,6 +19,26 @@ export default class IngredientStore {
     get ingredientsByPrice() {
         return Array.from(this.ingredientRegistry.values()).sort((a, b) => a.pricePerPackage - b.pricePerPackage);
     }
+
+    get ingredientsByCategory() {
+        return Array.from(this.ingredientRegistry.values()).sort((a, b) =>
+            Number(a.category) - Number(b.category)
+        );
+    }
+
+    get groupedIngredients() {
+        return Object.entries(
+            this.ingredientsByCategory.reduce((ingredients, ingredient) => {
+                const category = ingredient.category;
+                if (!ingredients[category]) {
+                    ingredients[category] = [];
+                }
+                ingredients[category].push(ingredient);
+                return ingredients;
+            }, {} as Record<string, Ingredient[]>)
+        );
+    }
+
 
     loadIngredients = async () => {
         this.setLoadingInitial(true);
@@ -70,26 +91,6 @@ export default class IngredientStore {
         this.loadingInitial = state;
     }
 
-/*    selectIngredient = (id: string) => {
-        this.selectedIngredient = this.ingredientRegistry.get(id);
-    }
-
-    cancelSelectedIngredient = () => {
-        this.selectedIngredient = undefined;
-    }
-
-    openForm = (id?: string) => {
-        if (id) {
-            this.selectIngredient(id);
-        } else {
-            this.cancelSelectedIngredient();
-        }
-        this.editMode = true;
-    }
-
-    closeForm = () => {
-        this.editMode = false;
-    }*/
 
     createIngredient = async (ingredient: Ingredient) => {
         this.loading = true;
