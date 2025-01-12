@@ -1,10 +1,12 @@
+import { IngredientCategory } from "../../models/ingredient.ts";
+
 export const ingredientCategoryOptions = [
-    {text: 'Spice', value: 'spice'},
-    {text: 'Meat', value: 'meat'},
-    {text: 'Vegetable', value: 'vegetable'},
-    {text: 'Fruit', value: 'fruit'},
-    {text: 'Dairy', value: 'dairy'},
-    {text: 'Grain', value: 'grain'},
-    {text: 'Liquid', value: 'liquid'},
-    {text: 'Baking', value: 'baking'}
-]
+    { key: IngredientCategory.Spice, text: "Spice", value: IngredientCategory.Spice },
+    { key: IngredientCategory.Meat, text: "Meat", value: IngredientCategory.Meat },
+    { key: IngredientCategory.Vegetable, text: "Vegetable", value: IngredientCategory.Vegetable },
+    { key: IngredientCategory.Fruit, text: "Fruit", value: IngredientCategory.Fruit },
+    { key: IngredientCategory.Dairy, text: "Dairy", value: IngredientCategory.Dairy },
+    { key: IngredientCategory.Grain, text: "Grain", value: IngredientCategory.Grain },
+    { key: IngredientCategory.Liquid, text: "Liquid", value: IngredientCategory.Liquid },
+    { key: IngredientCategory.Baking, text: "Baking", value: IngredientCategory.Baking },
+];

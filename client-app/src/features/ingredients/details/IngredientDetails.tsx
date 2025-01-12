@@ -27,10 +27,10 @@ export default observer(function IngredientDetails() {
             <Grid.Column width={10}>
                 <IngredientDetailedHeader ingredient={ingredient} />
                 <IngredientDetailedInfo ingredient={ingredient}/>
-                <IngredientDetailedChat />
+               {/* <IngredientDetailedChat />*/}
             </Grid.Column>
             <Grid.Column width={6}>
-                <IngredientDetailedSidebar />
+        {/*        <IngredientDetailedSidebar />*/}
             </Grid.Column>
         </Grid>
     )

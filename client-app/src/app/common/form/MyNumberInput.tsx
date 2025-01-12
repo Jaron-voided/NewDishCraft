@@ -8,6 +8,7 @@ interface Props {
     min?: number; // Optional: specify the minimum value
     max?: number; // Optional: specify the maximum value
     step?: number; // Optional: specify step increments
+    value?: number;
 }
 
 export default function MyNumberInput(props: Props) {

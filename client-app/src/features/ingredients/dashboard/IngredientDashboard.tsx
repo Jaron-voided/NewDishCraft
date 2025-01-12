@@ -1,4 +1,4 @@
-import {Grid} from "semantic-ui-react";
+import {Grid, Segment} from "semantic-ui-react";
 import IngredientList from "./IngredientList.tsx";
 
 import {useStore} from "../../../app/stores/store.ts";
@@ -20,16 +20,35 @@ export default observer(function IngredientDashboard() {
         }*/
     }, [loadIngredients, ingredientRegistry.size]);
 
+
     if (ingredientStore.loadingInitial) return <LoadingComponent content='Loading...' />
 
     return (
-        <Grid>
-           <Grid.Column width='10'>
-                <IngredientList />
-           </Grid.Column>
-            <Grid.Column width='6'>
-                <IngredientFilters />
+        <Grid centered>
+            <Grid.Column width={14}>
+                <Segment textAlign="center">
+                    <IngredientList />
+                </Segment>
             </Grid.Column>
         </Grid>
-    )
+    );
+
+/*
+    return (
+        <Segment clearing textAlign="center" style={{ width: "80%", margin: "0 auto" }}>
+            <IngredientList />
+        </Segment>
+    );
+*/
+
+    /*    return (
+            <Grid>
+               <Grid.Column center width='14'>
+                    <IngredientList />
+               </Grid.Column>
+    {/!*            <Grid.Column width='6'>
+                    <IngredientFilters />
+                </Grid.Column>*!/}
+            </Grid>
+        )*/
 })

@@ -1,5 +1,7 @@
+import { MeasuredIn } from "../../models/ingredient.ts";
+
 export const measuredInOptions = [
-    {text: 'Weight', value: 'weight'},
-    {text: 'Volume', value: 'volume'},
-    {text: 'Each', value: 'each'}
-]
+    { key: MeasuredIn.Weight, text: "Weight", value: MeasuredIn.Weight },
+    { key: MeasuredIn.Volume, text: "Volume", value: MeasuredIn.Volume },
+    { key: MeasuredIn.Each, text: "Each", value: MeasuredIn.Each },
+];

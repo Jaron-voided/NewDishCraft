@@ -9,8 +9,6 @@ export default function IngredientFilters() {
                 <Header icon='filter' attached color='teal' content='filters' />
                 <Menu.Item content='All Ingredients' />
             </Menu>
-            <Header />
-            <Calendar />
         </>
     )
 }

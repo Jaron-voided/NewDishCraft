@@ -13,23 +13,26 @@ export default observer(function RecipeForm() {
         createRecipe, updateRecipe, loading, loadRecipe, loadingInitial
     } = recipeStore;
 
-    //const [selectedIngredient, setSelectedIngredient] = useState("");
     const [selectedIngredients, setSelectedIngredients] = useState<string[]>([]);
     const {ingredientStore} = useStore();
     const {ingredientsByCategory} = ingredientStore;
 
     const [numberOfIngredients, setNumberOfIngredients] = useState(0);
 
-    const [measurements, setMeasurements] = useState(
+    const [measurements, setMeasurements] = useState<
+        { recipeId: string; ingredientId: string; amount: number }[]
+    >(
         Array.from({ length: numberOfIngredients }, () => ({
-            recipeId: '',
-            ingredientId: '',
+            recipeId: '', // Placeholder for recipe ID
+            ingredientId: '', // Placeholder for ingredient ID
             amount: 0,
         }))
     );
 
+
     const {id} = useParams();
     const navigate = useNavigate();
+
 
     const [recipe, setRecipe] = useState<Recipe>({
         id: '',
@@ -54,7 +57,8 @@ export default observer(function RecipeForm() {
                 ingredientId: '',
                 amount: 0,
             }))
-        )
+        );
+        console.log('Measurements state updated:', measurements);
     }, [numberOfIngredients, recipe.id]);
 
 
@@ -86,34 +90,42 @@ export default observer(function RecipeForm() {
                     : measurement
             )
         );
+        console.log(`Updated measurement at index ${index}:`, { ...measurements[index], amount });
     }
 
     function handleIngredientChange(index: number, value: string | number) {
+        const ingredientId = String(value);
         setSelectedIngredients((prev) => {
             const updated = [...prev];
-            updated[index] = String(value);
+            updated[index] = ingredientId;
             return updated;
         });
+
+        setMeasurements((prev) =>
+            prev.map((measurement, i) =>
+                i === index ? { ...measurement, ingredientId } : measurement
+            )
+        );
+
+        console.log('Updated measurements:', measurements);
     }
 
-/*    function handleIngredientChange(
-        _event: SyntheticEvent<HTMLElement>,
-        data: DropdownProps
-    ) {
-        setSelectedIngredients[index](data.value as string); // Ensure the value is a string
-    }*/
 
     function handleSubmit() {
+        // Validate measurements
+
         if (!recipe.id) {
             recipe.id = uuid();
-            createRecipe(recipe, measurements).then(() => {
-                navigate(`/recipes/${recipe.id}`)
-            });
+            console.log('Payload being sent (Create):', measurements);
+            measurements.forEach((m) => (m.recipeId = recipe.id)); // Attach recipe ID
+            createRecipe(recipe, measurements)
+                .then(() => navigate(`/recipes/${recipe.id}`))
+                .catch((error) => console.error("Error creating recipe:", error));
         } else {
-/*
-            recipe.measurements =  measurements;
-*/
-            updateRecipe(recipe).then(() => navigate(`/recipes/${recipe.id}`))
+            console.log('Payload being sent (Update):', measurements);
+            updateRecipe(recipe)
+                .then(() => navigate(`/recipes/${recipe.id}`))
+                .catch((error) => console.error("Error updating recipe:", error));
         }
     }
 
@@ -259,3 +271,4 @@ export default observer(function RecipeForm() {
         </Segment>
     );
 })
+

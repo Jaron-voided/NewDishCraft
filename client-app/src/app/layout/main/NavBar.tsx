@@ -1,5 +1,6 @@
 import {Button, Container, Image, Menu} from "semantic-ui-react";
 import {NavLink} from "react-router-dom";
+import IngredientFilters from "../../../features/ingredients/dashboard/IngredientFilters.tsx";
 
 
 
@@ -74,12 +75,6 @@ export default function NavBar() {
                         content="Create Recipe"
                         as={NavLink}
                         to="/createRecipe"
-                    /><Button
-                        primary
-                        size="big"
-                        content="Create Recipe"
-                        as={NavLink}
-                        to="/errors"
                     />
                 </div>
             </Container>

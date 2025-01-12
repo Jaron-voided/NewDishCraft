@@ -5,14 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ca248edd-2a8f-440a-bbd9-74d99b6cebba" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/client-app/src/app/common/form/MyNumberInput.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client-app/src/app/common/form/MySelectInput.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client-app/src/app/common/form/MyTextArea.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client-app/src/app/common/form/MyTextInput.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client-app/src/app/common/options/ingredientCategoryOptions.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client-app/src/app/common/options/measuredInOptions.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client-app/src/app/common/options/volumeOptions.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client-app/src/app/common/options/weightOptions.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-app/src/app/common/options/recipeCategoryOptions.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/API/obj/Debug/net8.0/API.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/API/obj/Debug/net8.0/API.AssemblyInfo.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/API/obj/Debug/net8.0/API.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/API/obj/Debug/net8.0/API.AssemblyInfoInputs.cache" afterDir="false" />
@@ -26,10 +19,21 @@
       <change beforePath="$PROJECT_DIR$/Persistence/obj/Debug/net8.0/Persistence.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Persistence/obj/Debug/net8.0/Persistence.AssemblyInfo.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Persistence/obj/Debug/net8.0/Persistence.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Persistence/obj/Debug/net8.0/Persistence.AssemblyInfoInputs.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Persistence/obj/Debug/net8.0/Persistence.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Persistence/obj/Debug/net8.0/Persistence.csproj.AssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/features/ingredients/details/IngredientDetailedHeader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/features/ingredients/details/IngredientDetailedHeader.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/app/common/form/MyNumberInput.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/common/form/MyNumberInput.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/app/common/form/MyTextArea.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/common/form/MyTextArea.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/app/common/options/ingredientCategoryOptions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/common/options/ingredientCategoryOptions.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/app/common/options/measuredInOptions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/common/options/measuredInOptions.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/app/common/options/volumeOptions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/common/options/volumeOptions.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/app/common/options/weightOptions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/common/options/weightOptions.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/app/layout/main/NavBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/layout/main/NavBar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/features/ingredients/dashboard/IngredientDashboard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/features/ingredients/dashboard/IngredientDashboard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/features/ingredients/dashboard/IngredientFilters.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/features/ingredients/dashboard/IngredientFilters.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/features/ingredients/dashboard/IngredientList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/features/ingredients/dashboard/IngredientList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/features/ingredients/dashboard/IngredientListItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/features/ingredients/dashboard/IngredientListItem.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/features/ingredients/details/IngredientDetails.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/features/ingredients/details/IngredientDetails.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/features/ingredients/details/stuff.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/features/ingredients/details/stuff.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client-app/src/features/ingredients/form/IngredientForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/features/ingredients/form/IngredientForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/features/recipes/form/RecipeForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/features/recipes/form/RecipeForm.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,8 +43,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="TypeScript File" />
         <option value="TypeScript JSX File" />
+        <option value="TypeScript File" />
       </list>
     </option>
   </component>
@@ -114,22 +118,11 @@
       <workItem from="1735239892612" duration="90000" />
       <workItem from="1735245243996" duration="1745000" />
       <workItem from="1735311923323" duration="18953000" />
-      <workItem from="1736344145660" duration="10075000" />
+      <workItem from="1736344145660" duration="28876000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/client-app/src/features/recipes/form/RecipeForm.tsx</url>
-          <line>80</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
