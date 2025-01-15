@@ -21,7 +21,7 @@ export default observer(function IngredientDashboard() {
     }, [loadIngredients, ingredientRegistry.size]);
 
 
-    if (ingredientStore.loadingInitial) return <LoadingComponent content='Loading...' />
+    if (ingredientStore.loadingInitial) return <LoadingComponent content='Loading ingredients...' />
 
     return (
         <Grid centered>

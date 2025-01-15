@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace API.Controllers;
 
 [ApiController]
@@ -42,12 +43,14 @@ public class AccountController : ControllerBase
     {
         if (await _userManager.Users.AnyAsync(x => x.UserName == registerDto.UserName))
         {
-            return BadRequest("Username is already taken");
+            ModelState.AddModelError("Username", "Username is already taken");
+            return BadRequest(ModelState);
         }
         
         if (await _userManager.Users.AnyAsync(x => x.Email == registerDto.Email))
         {
-            return BadRequest("Email is already taken");
+            ModelState.AddModelError("Email", "Email is already taken");
+            return BadRequest(ModelState);
         }
 
         var user = new AppUser

@@ -1,11 +1,15 @@
-import {Button, Container, Image, Menu} from "semantic-ui-react";
-import {NavLink} from "react-router-dom";
+import {Button, Container, Dropdown, Image, Menu} from "semantic-ui-react";
+import {Link, NavLink} from "react-router-dom";
 import IngredientFilters from "../../../features/ingredients/dashboard/IngredientFilters.tsx";
+import {useStore} from "../../stores/store.ts";
+import {observer} from "mobx-react-lite";
 
 
 
 
-export default function NavBar() {
+export default observer(function NavBar() {
+    const {userStore : {user, logout}} = useStore();
+
     return (
         <Menu inverted fixed="top">
             <Container
@@ -77,6 +81,15 @@ export default function NavBar() {
                         to="/createRecipe"
                     />
                 </div>
+                <Menu.Item position='right'>
+                    <Image src={user?.image || '/assets/logo.png'} avatar spaced='right' />
+                    <Dropdown pointing='top left' text={user?.displayName}>
+                        <Dropdown.Menu>
+                            <Dropdown.Item as={Link} to={`/profile/${user?.username}`} text='My Profile' icon='user'/>
+                            <Dropdown.Item onClick={logout} text='Logout' icon='power'/>
+                        </Dropdown.Menu>
+                    </Dropdown>
+                </Menu.Item>
             </Container>
         </Menu>
     );
@@ -140,4 +153,4 @@ export default function NavBar() {
         </Menu>
     )
  */
-}
+})
