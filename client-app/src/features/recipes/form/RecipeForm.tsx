@@ -1,48 +1,38 @@
-import {useState, ChangeEvent, SyntheticEvent, useEffect} from "react";
-import {Button, Form, Segment, Dropdown, DropdownProps} from "semantic-ui-react";
-import {Recipe, RecipeCategory} from "../../../app/models/recipe.ts";
-import {useStore} from "../../../app/stores/store.ts";
-import {observer} from "mobx-react-lite";
-import {Link, useNavigate, useParams} from "react-router-dom";
+import { Button, Segment, FormField, Header, TextArea } from "semantic-ui-react";
+import { Recipe, RecipeCategory } from "../../../app/models/recipe.ts";
+import { useStore } from "../../../app/stores/store.ts";
+import { observer } from "mobx-react-lite";
+import { Link, useNavigate, /*useParams*/ } from "react-router-dom";
 import LoadingComponent from "../../../app/layout/LoadingComponent.tsx";
-import {v4 as uuid} from "uuid";
+import { v4 as uuid } from "uuid";
+import { Formik, Form } from "formik";
+import MyTextInput from "../../../app/common/form/MyTextInput.tsx";
+import MySelectInput from "../../../app/common/form/MySelectInput.tsx";
+import { recipeCategoryOptions } from "../../../app/common/options/recipeCategoryOptions.ts";
+import MyNumberInput from "../../../app/common/form/MyNumberInput.tsx";
+import styles from "./RecipeForm.module.css";
 
 export default observer(function RecipeForm() {
-    const {recipeStore} = useStore();
-    const {
-        createRecipe, updateRecipe, loading, loadRecipe, loadingInitial
-    } = recipeStore;
-
-    const [selectedIngredients, setSelectedIngredients] = useState<string[]>([]);
-    const {ingredientStore} = useStore();
-    const {ingredientsByCategory} = ingredientStore;
-
-    const [numberOfIngredients, setNumberOfIngredients] = useState(0);
-
-    const [measurements, setMeasurements] = useState<
-        { recipeId: string; ingredientId: string; amount: number }[]
-    >(
-        Array.from({ length: numberOfIngredients }, () => ({
-            recipeId: '', // Placeholder for recipe ID
-            ingredientId: '', // Placeholder for ingredient ID
-            amount: 0,
-        }))
-    );
-
-
-    const {id} = useParams();
+    const { recipeStore, ingredientStore, userStore  } = useStore();
+    const { createRecipe, updateRecipe, selectedRecipe, loadingInitial } = recipeStore;
+    const { user } = userStore;
     const navigate = useNavigate();
 
-
-    const [recipe, setRecipe] = useState<Recipe>({
-        id: '',
-        name: '',
-        recipeCategory: RecipeCategory.Soup, // Default to Spice
+    const initialRecipe: Recipe = {
+        id: "",
+        name: "",
+        recipeCategory: RecipeCategory.Soup,
         servingsPerRecipe: 0,
-        instructionsJson: '',
         instructions: [],
+        appUserId: user?.id || "", // Use current user's ID
+        totalPrice: 0,
+        pricePerServing: 0,
+        caloriesPerRecipe: 0,
+        carbsPerRecipe: 0,
+        fatPerRecipe: 0,
+        proteinPerRecipe: 0,
         measurements: []
-    })
+    };
 
     const ingredientOptions = ingredientStore.ingredientsByCategory.map((ingredient) => ({
         key: ingredient.id,
@@ -50,225 +40,138 @@ export default observer(function RecipeForm() {
         value: ingredient.id,
     }));
 
-    useEffect(() => {
-        setMeasurements(
-            Array.from({ length: numberOfIngredients }, () => ({
-                recipeId: recipe.id || '',
-                ingredientId: '',
-                amount: 0,
-            }))
-        );
-        console.log('Measurements state updated:', measurements);
-    }, [numberOfIngredients, recipe.id]);
-
-
-    useEffect(() => {
-        if (id) {
-            loadRecipe(id).then(recipe => {
-                setRecipe(recipe!);
-                setNumberOfIngredients(recipe!.measurements.length);
-                setMeasurements(recipe!.measurements);
-            });
+    const onSubmit = async (values: Recipe, { resetForm: resetForm }) => {
+        try {
+            if (!values.id) {
+                const newId = uuid();
+                const newRecipe: Recipe = {
+                    ...values,
+                    id: newId,
+                    appUserId: user?.id || ""
+                };
+                await createRecipe(newRecipe);
+                resetForm();
+                navigate(`/recipes/${newRecipe.id}`);
+            } else {
+                await updateRecipe(values);
+                navigate(`/recipes/${values.id}`);
+            }
+        } catch (error) {
+            console.error("Error in onSubmit:", error);
         }
-    }, [id, loadRecipe]);
+    };
 
-    useEffect(() => {
-        if (ingredientsByCategory.length === 0) {
-            ingredientStore.loadIngredients();
-        }
-    }, [ingredientStore]);
-
-    function handleIngredientAmountChange(value: number) {
-        setNumberOfIngredients(value);
-    }
-
-    function handleAmountChange(index: number, amount: number) {
-        setMeasurements((prev) =>
-            prev.map((measurement, i) =>
-                i === index
-                    ? { ...measurement, amount }
-                    : measurement
-            )
-        );
-        console.log(`Updated measurement at index ${index}:`, { ...measurements[index], amount });
-    }
-
-    function handleIngredientChange(index: number, value: string | number) {
-        const ingredientId = String(value);
-        setSelectedIngredients((prev) => {
-            const updated = [...prev];
-            updated[index] = ingredientId;
-            return updated;
-        });
-
-        setMeasurements((prev) =>
-            prev.map((measurement, i) =>
-                i === index ? { ...measurement, ingredientId } : measurement
-            )
-        );
-
-        console.log('Updated measurements:', measurements);
-    }
-
-
-    function handleSubmit() {
-        // Validate measurements
-
-        if (!recipe.id) {
-            recipe.id = uuid();
-            console.log('Payload being sent (Create):', measurements);
-            measurements.forEach((m) => (m.recipeId = recipe.id)); // Attach recipe ID
-            createRecipe(recipe, measurements)
-                .then(() => navigate(`/recipes/${recipe.id}`))
-                .catch((error) => console.error("Error creating recipe:", error));
-        } else {
-            console.log('Payload being sent (Update):', measurements);
-            updateRecipe(recipe)
-                .then(() => navigate(`/recipes/${recipe.id}`))
-                .catch((error) => console.error("Error updating recipe:", error));
-        }
-    }
-
-    function handleInputChange(event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) {
-        const { name, value } = event.target;
-
-        if (name === "instructions") {
-            setRecipe({
-                ...recipe,
-                instructions: value.split("\n"), // Split multiline input into an array
-                instructionsJson: value.replace(/\n/g, ";"), // Convert multiline input to JSON string format
-            });
-        } else {
-            setRecipe({
-                ...recipe,
-                [name]: value,
-            });
-        }
-    }
-
-
-    function handleDropdownChange(
-        _event: SyntheticEvent<HTMLElement>,
-        data : DropdownProps
-    ) {
-        setRecipe({
-            ...recipe,
-            recipeCategory: data.value as RecipeCategory, // Type assertion to RecipeCategory
-        });
-    }
-
-    // Dropdown options for categories
-    const categoryOptions = Object.values(RecipeCategory).map((recipeCategory) => ({
-        key: recipeCategory,
-        text: recipeCategory,
-        value: recipeCategory,
-    }));
-
-
-    if (loadingInitial) return <LoadingComponent content='Loading Recipe...' />
+    if (loadingInitial) return <LoadingComponent content="Loading Recipe..." />;
 
     return (
         <Segment clearing>
-            <Form onSubmit={handleSubmit} autoComplete="off">
-                {/* Name of Recipe */}
-                <Form.Field>
-                    <label>Name of Recipe</label>
-                    <Form.Input
-                        placeholder="Name"
-                        value={recipe.name}
-                        name="name"
-                        onChange={handleInputChange}
-                    />
-                </Form.Field>
+            <Header as="h2" textAlign="center" color="teal" className={styles.header}>
+                Recipe Form
+            </Header>
+            <Formik
+                enableReinitialize
+                initialValues={selectedRecipe || initialRecipe}
+                onSubmit={onSubmit}
+            >
+                {({ values, handleSubmit, isSubmitting, isValid, dirty, setFieldValue }) => (
+                    <Form className={`ui form ${styles.form}`} onSubmit={handleSubmit}>
+                        {/* Name, Category, and Servings Per Recipe in one row */}
+                        <div className={styles.row}>
+                            <FormField className={styles.field}>
+                                <label>Name</label>
+                                <MyTextInput
+                                    name="name"
+                                    placeholder="Name of Recipe"
+                                />
+                            </FormField>
+                            <FormField className={styles.field}>
+                                <label>Category</label>
+                                <MySelectInput
+                                    options={recipeCategoryOptions}
+                                    placeholder="Category"
+                                    name="recipeCategory"
+                                />
+                            </FormField>
+                            <FormField className={styles.field}>
+                                <label>Servings Per Recipe</label>
+                                <MyNumberInput
+                                    placeholder="Servings Per Recipe"
+                                    name="servingsPerRecipe"
+                                    min={1}
+                                />
+                            </FormField>
+                        </div>
 
-                {/* Recipe Category */}
-                <Form.Field>
-                    <label>Recipe Category</label>
-                    <Dropdown
-                        placeholder="Select Category"
-                        fluid
-                        selection
-                        options={categoryOptions}
-                        name="recipeCategory"
-                        value={recipe.recipeCategory}
-                        onChange={handleDropdownChange}
-                    />
-                </Form.Field>
+                        {/* Full-width Instructions Field (Restored TextArea) */}
+                        <div className={styles.fullWidth}>
+                            <FormField>
+                                <label>Instructions</label>
+                                <TextArea
+                                    //name="instructionsJson"
+                                    placeholder="Enter instructions here..."
+                                    value={values.instructions.join('\n')}
+                                    onChange={(e) =>
+                                        setFieldValue("instructions", e.target.value.split('\n'))
+                                    }
+                                />
+                            </FormField>
+                        </div>
 
-                {/* Price Per Package */}
-                <Form.Field>
-                    <label>Servings Per Recipe</label>
-                    <Form.Input
-                        placeholder="Servings Per Recipe"
-                        type="number"
-                        value={recipe.servingsPerRecipe}
-                        name="servingsPerRecipe"
-                        onChange={handleInputChange}
-                    />
-                </Form.Field>
+                        {/* Ingredient Count Field */}
+                        <div className={styles.row}>
+                            <FormField className={styles.field}>
+                                <label>How many ingredients?</label>
+                                <MyNumberInput
+                                    placeholder="How many ingredients?"
+                                    name="measurements.length"
+                                    min={0}
+                                    onChange={(e) => {
+                                        const count = parseInt(e.target.value, 10) || 0;
+                                        setFieldValue("measurements", Array(count).fill({ ingredientId: "", amount: 0 }));
+                                    }}
+                                />
+                            </FormField>
+                        </div>
 
-                {/* Measurements in Package */}
-                <Form.Field>
-                    <label>Instructions</label>
-                    <Form.TextArea
-                        placeholder="Enter instructions here"
-                        value={recipe.instructions.join("\n")} // Convert array to multiline string for display
-                        name="instructions"
-                        onChange={handleInputChange}
-                    />
-                </Form.Field>
+                        {/* Dynamically Generated Ingredient Inputs */}
+                        {values.measurements.map((_measurement, index) => (
+                            <div key={index} className={styles.row}>
+                                <FormField className={styles.field}>
+                                    <label>Ingredient {index + 1}</label>
+                                    <MySelectInput
+                                        options={ingredientOptions}
+                                        placeholder="Select Ingredient"
+                                        name={`measurements[${index}].ingredientId`}
+                                    />
+                                </FormField>
+                                <FormField className={styles.field}>
+                                    <label>Amount</label>
+                                    <MyNumberInput
+                                        placeholder="Amount"
+                                        name={`measurements[${index}].amount`}
+                                    />
+                                </FormField>
+                            </div>
+                        ))}
 
-                <Form.Field>
-                    <label>How many ingredients</label>
-                    <Form.Input
-                        placeholder="Number of ingredients"
-                        type="number"
-                        value={numberOfIngredients}
-                        onChange={(_e, data ) =>
-                            handleIngredientAmountChange(Number(data.value))}
-                    />
-                </Form.Field>
-
-                {Array.from({ length: numberOfIngredients }).map((_, index) => (
-                    <Form.Group key={index}>
-                        <Form.Input
-                            placeholder="Enter amount"
-                            type="number"
-                            onChange={(e) =>
-                                handleAmountChange(index, Number(e.target.value))}
+                        <Button
+                            disabled={isSubmitting || !dirty || !isValid}
+                            positive
+                            type="submit"
+                            content="Submit"
+                            loading={isSubmitting}
+                            floated="right"
                         />
-                        <Dropdown
-                            placeholder="Select Ingredients"
-                            fluid
-                            selection
-                            options={ingredientOptions}
-                            value={selectedIngredients[index] || ''}
-                            //value={selectedIngredient || ''}
-                            onChange={(_e, { value }) =>
-                                handleIngredientChange(index, String(value))}
+                        <Button
+                            as={Link}
+                            to="/recipes"
+                            type="button"
+                            content="Cancel"
+                            floated="right"
                         />
-                    </Form.Group>
-                ))}
-
-
-
-                {/* Submit and Cancel Buttons */}
-                <Button
-                    loading={loading}
-                    floated="right"
-                    positive
-                    type="submit"
-                    content="Submit"
-                />
-                <Button
-                    as={Link} to='/recipes'
-                    floated="right"
-                    type="button"
-                    content="Cancel"
-                />
-            </Form>
-
+                    </Form>
+                )}
+            </Formik>
         </Segment>
     );
-})
-
+});

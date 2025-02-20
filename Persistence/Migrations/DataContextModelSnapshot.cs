@@ -87,10 +87,62 @@ namespace Persistence.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("Domain.Models.DayPlan", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid?>("WeekPlanId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.HasIndex("WeekPlanId");
+
+                    b.ToTable("DayPlans");
+                });
+
+            modelBuilder.Entity("Domain.Models.DayPlanRecipe", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("DayPlanId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("RecipeId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Servings")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DayPlanId");
+
+                    b.HasIndex("RecipeId");
+
+                    b.ToTable("DayPlanRecipes");
+                });
+
             modelBuilder.Entity("Domain.Models.Ingredient", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("AppUserId")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("Category")
@@ -108,6 +160,8 @@ namespace Persistence.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
 
                     b.ToTable("Ingredients");
                 });
@@ -183,6 +237,9 @@ namespace Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("InstructionsJson")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -200,7 +257,28 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AppUserId");
+
                     b.ToTable("Recipes");
+                });
+
+            modelBuilder.Entity("Domain.Models.WeekPlan", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.ToTable("WeekPlans");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -331,12 +409,58 @@ namespace Persistence.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Domain.Models.DayPlan", b =>
+                {
+                    b.HasOne("Domain.Models.AppUser", "AppUser")
+                        .WithMany("DayPlans")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Domain.Models.WeekPlan", "WeekPlan")
+                        .WithMany("DayPlans")
+                        .HasForeignKey("WeekPlanId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("AppUser");
+
+                    b.Navigation("WeekPlan");
+                });
+
+            modelBuilder.Entity("Domain.Models.DayPlanRecipe", b =>
+                {
+                    b.HasOne("Domain.Models.DayPlan", "DayPlan")
+                        .WithMany("DayPlanRecipes")
+                        .HasForeignKey("DayPlanId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Models.Recipe", "Recipe")
+                        .WithMany()
+                        .HasForeignKey("RecipeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("DayPlan");
+
+                    b.Navigation("Recipe");
+                });
+
+            modelBuilder.Entity("Domain.Models.Ingredient", b =>
+                {
+                    b.HasOne("Domain.Models.AppUser", "AppUser")
+                        .WithMany("Ingredients")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("AppUser");
+                });
+
             modelBuilder.Entity("Domain.Models.Measurement", b =>
                 {
                     b.HasOne("Domain.Models.Ingredient", "Ingredient")
                         .WithMany()
                         .HasForeignKey("IngredientId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Domain.Models.Recipe", "Recipe")
@@ -370,6 +494,26 @@ namespace Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("Ingredient");
+                });
+
+            modelBuilder.Entity("Domain.Models.Recipe", b =>
+                {
+                    b.HasOne("Domain.Models.AppUser", "AppUser")
+                        .WithMany("Recipes")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("AppUser");
+                });
+
+            modelBuilder.Entity("Domain.Models.WeekPlan", b =>
+                {
+                    b.HasOne("Domain.Models.AppUser", "AppUser")
+                        .WithMany("WeekPlans")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("AppUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -423,6 +567,22 @@ namespace Persistence.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Domain.Models.AppUser", b =>
+                {
+                    b.Navigation("DayPlans");
+
+                    b.Navigation("Ingredients");
+
+                    b.Navigation("Recipes");
+
+                    b.Navigation("WeekPlans");
+                });
+
+            modelBuilder.Entity("Domain.Models.DayPlan", b =>
+                {
+                    b.Navigation("DayPlanRecipes");
+                });
+
             modelBuilder.Entity("Domain.Models.Ingredient", b =>
                 {
                     b.Navigation("MeasurementUnit");
@@ -433,6 +593,11 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Models.Recipe", b =>
                 {
                     b.Navigation("Measurements");
+                });
+
+            modelBuilder.Entity("Domain.Models.WeekPlan", b =>
+                {
+                    b.Navigation("DayPlans");
                 });
 #pragma warning restore 612, 618
         }

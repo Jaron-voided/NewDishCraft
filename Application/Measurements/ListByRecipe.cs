@@ -10,13 +10,6 @@ public class ListByRecipe
     public class Query : IRequest<List<Measurement>>
     {
         public Guid RecipeId { get; set; }
-
-        /*
-        public Query(Guid recipeId)
-        {
-            RecipeId = recipeId;
-        }
-        */
         
     }
 

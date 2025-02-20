@@ -1,0 +1,90 @@
+/*IngredientListItem*/
+
+.card {
+    margin: 1rem 0;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Top row: Image, Name, and Buttons */
+.topSegment {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    position: relative;
+}
+
+.image {
+    height: 50px; /* Reduced height for better fit */
+    width: 50px; /* Adjusted width to maintain aspect ratio */
+    object-fit: contain; /* Ensure full image is visible */
+    border-radius: 50%; /* Optional for circular image */
+}
+
+.header {
+    font-size: 1.8rem; /* Larger font size */
+    font-weight: bold;
+    color: teal;
+    text-align: center;
+}
+
+.buttons {
+    display: flex;
+    gap: 0.5rem; /* Space between Edit and View buttons */
+    justify-content: flex-end; /* Aligns buttons to the right */
+}
+
+.viewButton,
+.editButton {
+    font-size: 1rem;
+}
+
+/* Nutritional Information */
+.nutritionSegment {
+    background-color: lightcoral;
+    padding: 1rem;
+}
+
+.nutritionGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+/* Measurements, Pricing, and Actions */
+.pricingSegment {
+    background-color: darkgray;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* Aligns "XYZ recipes" and Delete vertically */
+    font-size: 0.9rem;
+    color: salmon;
+}
+
+.pricingInfo {
+    text-align: left; /* Left-aligned measurements and pricing */
+    display: flex;
+    flex-direction: column; /* Ensures vertical alignment */
+    gap: 0.5rem;
+}
+
+.actions {
+    display: flex;
+    flex-direction: column; /* Ensures Delete is below "XYZ recipes" */
+    align-items: flex-end; /* Aligns to the right */
+    gap: 0.5rem;
+}
+
+.recipeInfo {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.deleteButton {
+    font-size: 1rem;
+}

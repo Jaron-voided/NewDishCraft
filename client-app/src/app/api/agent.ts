@@ -5,6 +5,8 @@ import {toast} from "react-toastify";
 import {router} from "../router/Routes.tsx";
 import {store} from "../stores/store.ts";
 import {User, UserFormValues} from "../models/user.ts";
+import {PaginatedResult} from "../models/pagination.ts";
+import {DayPlan, DayPlanCalculationsDto, DayPlanRecipe} from "../models/dayPlan.ts";
 
 
 const sleep = (delay: number) => {
@@ -32,6 +34,11 @@ axios.interceptors.response.use(async response => {
         return Promise.reject(error);
     }*/
     await sleep(1000);
+    const pagination = response.headers['pagination'];
+    if (pagination) {
+        response.data = new PaginatedResult(response.data, JSON.parse(pagination));
+        return response as AxiosResponse<PaginatedResult<unknown>>
+    }
     return response;
 }, (error: AxiosError) => {
         const {data, status, config} = error.response as AxiosResponse;
@@ -78,14 +85,30 @@ const requests = {
 }
 
 const Ingredients = {
-    list: () => requests.get<Ingredient[]>('/ingredients'),
-    details: (id: string) => requests.get<Ingredient>(`/ingredients/${id}`),
+    list: (params: URLSearchParams) => {
+        return axios.get<PaginatedResult<Ingredient[]>>('/ingredients', {params})
+            .then(response => {
+                console.log('Raw API Response:', response);
+                return responseBody(response);
+            });
+    },
+    details: (id: string) => {
+        return requests.get<Ingredient>(`/ingredients/${id}`)
+            .then(response => {
+                console.log('Raw Details Response:', response);
+                return response;
+            });
+    },
+/*    list: (params: URLSearchParams) => axios.get<PaginatedResult<Ingredient[]>>('/ingredients', {params})
+        .then(responseBody),
+    details: (id: string) => requests.get<Ingredient>(`/ingredients/${id}`),*/
     create: (ingredient: Ingredient) => axios.post<void>('/ingredients', ingredient),
     update: (ingredient: Ingredient) => axios.put<void>(`/ingredients/${ingredient.id}`, ingredient),
     delete: (id: string) => axios.delete<void>(`/ingredients/${id}`)
 }
 const Measurements = {
     list: () => requests.get<Measurement[]>('/measurements'),
+    listByRecipe: (recipeId: string) => requests.get<Measurement[]>(`/measurements/by-recipe/${recipeId}`),
     details: (id: string) => requests.get<Measurement>(`/measurements/${id}`),
     create: (measurement: Measurement) => axios.post<void>('/measurements', measurement),
     update: (measurement: Measurement) => axios.put<void>(`/measurements/${measurement.id}`, measurement),
@@ -93,11 +116,38 @@ const Measurements = {
 }
 
 const Recipes = {
-    list: () => requests.get<Recipe[]>('/recipes'),
-    details: (id: string) => requests.get<Recipe>(`/recipes/${id}`),
+    list: (params: URLSearchParams) => axios.get<PaginatedResult<Recipe[]>>('/recipes',  {params})
+        .then(responseBody),
+    //list: () => requests.get<Recipe[]>('/recipes'),
+    details: (id: string) => requests.get<Recipe>(`/recipes/${id}`).catch(error => {
+        if(error.response?.status === 404) {
+            return null;
+        }
+        throw error;
+    }),
     create: (recipe: Recipe) => axios.post<void>('/recipes', recipe),
     update: (recipe: Recipe) => axios.put<void>(`/recipes/${recipe.id}`, recipe),
     delete: (id: string) => axios.delete<void>(`/recipes/${id}`)
+}
+
+const DayPlanRecipes = {
+    list: () => requests.get<DayPlanRecipe[]>('/recipes'),
+    //list: () => requests.get<DayPlanRecipe[]>('/recipes'),
+    details: (id: string) => requests.get<DayPlanRecipe>(`/dayPlanRecipes/${id}`),
+    create: (dayPlanRecipe: DayPlanRecipe) => axios.post<void>('/dayPlanRecipes', dayPlanRecipe),
+    update: (dayPlanRecipe: DayPlanRecipe) => axios.put<void>(`/dayPlanRecipes/${dayPlanRecipe.id}`, dayPlanRecipe),
+    delete: (id: string) => axios.delete<void>(`/dayPlanRecipes/${id}`)
+}
+
+const DayPlans = {
+    list: (params: URLSearchParams) => axios.get<PaginatedResult<DayPlan[]>>('/dayPlan',  {params})
+        .then(responseBody),
+    //list: () => requests.get<DayPlan[]>('/dayPlan'),
+    details: (id: string) => requests.get<DayPlan>(`/dayPlan/${id}`),
+    create: (dayPlan: DayPlan) => axios.post<void>('/dayPlan', dayPlan),
+    update: (dayPlan: DayPlan) => axios.put<void>(`/dayPlan/${dayPlan.id}`, dayPlan),
+    delete: (id: string) => axios.delete<void>(`/dayPlan/${id}`),
+    calculations: (id: string) => axios.get<DayPlanCalculationsDto>(`/dayPlan/${id}/calculations`)
 }
 
 const Account = {
@@ -110,6 +160,8 @@ const agent = {
     Ingredients,
     Recipes,
     Measurements,
+    DayPlans,
+    DayPlanRecipes,
     Account
 }
 

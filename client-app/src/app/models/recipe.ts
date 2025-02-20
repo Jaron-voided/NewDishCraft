@@ -1,5 +1,5 @@
 // Enums
-import {Ingredient} from "./ingredient.ts";
+// import {Ingredient} from "./ingredient.ts";
 
 export enum RecipeCategory {
     Soup = "Soup",
@@ -11,23 +11,62 @@ export enum RecipeCategory {
     Sauce = "Sauce"
 }
 
+export interface RecipeNutrition {
+    recipeId: string;
+    totalCalories: number;
+    totalCarbs: number;
+    totalFat: number;
+    totalProtein: number;
+    caloriesPerServing: number;
+    carbsPerServing: number;
+    fatPerServing: number;
+    proteinPerServing: number;
+}
 
 // Interfaces
 export interface Recipe {
     id: string;
     name: string;
-    recipeCategory: RecipeCategory; // Enum for recipe categories
+    recipeCategory: string; // Now a string instead of an enum
     servingsPerRecipe: number;
-    instructionsJson: string; // Backend-stored string for instructions
-    instructions: string[]; // Array representation of instructions
-    measurements: Measurement[]; // Array of measurements associated with the recipe
+    instructions: string[]; // Use array instead of JSON string
+    appUserId: string; // Ensure it's present
+    totalPrice: number;
+    pricePerServing: number;
+    caloriesPerRecipe: number;
+    carbsPerRecipe: number;
+    fatPerRecipe: number;
+    proteinPerRecipe: number;
+
+    measurements: Measurement[];
+    nutrition?: RecipeNutrition;
+/*    nutrition?: RecipeNutrition | null;
+
+    measurements: {
+        ingredientId: string;
+        amount: number;
+    }[];*/
 }
+
+
 
 export interface Measurement {
     id: string;
     recipeId: string;
     ingredientId: string;
     amount: number;
-    recipe?: Recipe | null; // Optional and nullable to avoid circular dependency issues
-    ingredient?: Ingredient | null; // Optional and nullable, referencing your Ingredient interface
+    recipeName: string;
+    ingredientName: string;
+    ingredientPricePerMeasurement: number;
+    ingredientCalories: number;
+    ingredientCarbs: number;
+    ingredientFat: number;
+    ingredientProtein: number;
+    pricePerAmount: number;
+    caloriesPerAmount: number;
+    carbsPerAmount: number;
+    fatPerAmount: number;
+    proteinPerAmount: number;
 }
+
+

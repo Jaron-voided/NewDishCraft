@@ -5,40 +5,172 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ca248edd-2a8f-440a-bbd9-74d99b6cebba" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/client-app/src/app/common/modals/ModalContainer.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client-app/src/app/models/user.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client-app/src/app/stores/modalStore.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client-app/src/app/stores/userStore.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client-app/src/features/users/LoginForm.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/client-app/src/features/users/RegisterForm.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/API/Controllers/DayPlanController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/API/Controllers/WeekPlanController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/API/Extensions/HttpExtensions.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Application/Core/PagedList.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Application/Core/PagingParams.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Application/DayPlan/CalculateDayPlanTotals.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Application/DayPlan/DTOs/DayPlanCalculationsDto.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Application/Ingredients/IngredientDto.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Application/Ingredients/IngredientParams.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Application/Ingredients/NutritionalDetails.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Application/Ingredients/NutritionalInfoDto.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Application/Interfaces/IUserAccessor.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Application/Measurements/MeasurementDto.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Application/Profiles/Profile.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Application/Recipes/RecipeDto.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Application/Recipes/RecipeNutritionDto.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Application/Recipes/RecipeParams.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Application/Recipes/RecipeValidator.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Domain/Models/DayPlan.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Domain/Models/DayPlanRecipe.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Domain/Models/WeekPlan.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Infrastructure/Security/UserAccessor.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Tests/BusinessLogicTests/DayPlanLogicTest.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Tests/HttpRequests/DayPlanRequests.http" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Tests/IntegrationTests/DayPlanControllerTests.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Tests/IntegrationTests/IngredientControllerTests.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Tests/IntegrationTests/RecipeControllerTests.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Tests/TestUtilities/CustomWebApplicationFactory.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Tests/TestUtilities/ResetDatabaseService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Tests/TestUtilities/TestAuthHandler.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Tests/TestUtilities/TestHelperMethods.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-app/src/app/Utilities/expandMeasurements.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-app/src/app/layout/main/NavBar/NavBar.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-app/src/app/layout/main/NavBar/NavBar.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-app/src/app/models/dayPlan.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-app/src/app/models/pagination.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-app/src/app/stores/dayPlanStore.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-app/src/features/dayPlans/dashboard/DayPlanDashboard.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-app/src/features/dayPlans/dashboard/DayPlanFilters.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-app/src/features/dayPlans/dashboard/DayPlanList.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-app/src/features/dayPlans/dashboard/DayPlanListItem.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-app/src/features/dayPlans/dashboard/DayPlanListItem.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-app/src/features/dayPlans/dashboard/DayPlanListItemPlaceholder.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-app/src/features/dayPlans/details/DayPlanDetailedHeader.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-app/src/features/dayPlans/details/DayPlanDetailedInfo.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-app/src/features/dayPlans/details/DayPlanDetailedSidebar.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-app/src/features/dayPlans/details/DayPlanDetails.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-app/src/features/dayPlans/form/DayPlanForm.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-app/src/features/dayPlans/form/DayPlanForm.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-app/src/features/ingredients/dashboard/IngredientFilter.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-app/src/features/ingredients/dashboard/IngredientListItem.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-app/src/features/ingredients/dashboard/IngredientListItemPlaceholder.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-app/src/features/ingredients/form/IngredientForm.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-app/src/features/recipes/dashboard/RecipeListItem.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-app/src/features/recipes/dashboard/RecipeListItemPlaceholder.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-app/src/features/recipes/details/RecipeDetailedHeader.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-app/src/features/recipes/details/RecipeDetailedInfo.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-app/src/features/recipes/details/RecipeDetailedSidebar.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-app/src/features/recipes/form/RecipeForm.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client-app/src/features/users/UserProfile.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stuff.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/API.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/API/API.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/API/Controllers/AccountController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/API/Controllers/AccountController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/Controllers/BaseApiController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/API/Controllers/BaseApiController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/API/Controllers/IngredientsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/API/Controllers/IngredientsController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/Controllers/MeasurementsController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/API/Controllers/MeasurementsController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/Controllers/RecipesController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/API/Controllers/RecipesController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/Extensions/ApplicationServiceExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/API/Extensions/ApplicationServiceExtensions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/Middleware/ExceptionMiddleware.cs" beforeDir="false" afterPath="$PROJECT_DIR$/API/Middleware/ExceptionMiddleware.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/API/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/API/appsettings.Development.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/database.sqlite" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/obj/API.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/API/obj/API.csproj.nuget.dgspec.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/API/obj/Debug/net8.0/API.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/API/obj/Debug/net8.0/API.AssemblyInfo.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/API/obj/Debug/net8.0/API.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/API/obj/Debug/net8.0/API.AssemblyInfoInputs.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/API/obj/Debug/net8.0/API.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/API/obj/Debug/net8.0/API.csproj.AssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/pantry.db" beforeDir="false" afterPath="$PROJECT_DIR$/API/pantry.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/pantry.db-shm" beforeDir="false" afterPath="$PROJECT_DIR$/API/pantry.db-shm" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/API/pantry.db-wal" beforeDir="false" afterPath="$PROJECT_DIR$/API/pantry.db-wal" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/API/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/API/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/API/obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/API/obj/rider.project.model.nuget.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/API/obj/rider.project.restore.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/pantry.db" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Application.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Application.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Core/MappingProfiles.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Core/MappingProfiles.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Ingredients/Create.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Ingredients/Create.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Ingredients/Details.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Ingredients/Details.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Ingredients/Edit.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Ingredients/Edit.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Ingredients/IngredientValidator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Ingredients/IngredientValidator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Ingredients/List.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Ingredients/List.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Measurements/Details.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Measurements/Details.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Measurements/List.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Measurements/List.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Measurements/ListByRecipe.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Measurements/ListByRecipe.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Recipes/Create.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Recipes/Create.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Recipes/Delete.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Recipes/Delete.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Recipes/Details.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Recipes/Details.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Recipes/Edit.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Recipes/Edit.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Recipes/List.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Recipes/List.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/obj/Application.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/Application/obj/Application.csproj.nuget.dgspec.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Application/obj/Debug/net8.0/Application.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/obj/Debug/net8.0/Application.AssemblyInfo.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Application/obj/Debug/net8.0/Application.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Application/obj/Debug/net8.0/Application.AssemblyInfoInputs.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Application/obj/Debug/net8.0/Application.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Application/obj/Debug/net8.0/Application.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/Application/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Application/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/Application/obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/Application/obj/rider.project.model.nuget.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/Application/obj/rider.project.restore.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DishCraft.sln" beforeDir="false" afterPath="$PROJECT_DIR$/DishCraft.sln" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Domain/Models/AppUser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Models/AppUser.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Domain/Models/Ingredient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Models/Ingredient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Domain/Models/Recipe.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/Models/Recipe.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Domain/obj/Debug/net8.0/Domain.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/obj/Debug/net8.0/Domain.AssemblyInfo.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Domain/obj/Debug/net8.0/Domain.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/obj/Debug/net8.0/Domain.AssemblyInfoInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Domain/obj/Domain.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/obj/Domain.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Domain/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Domain/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Domain/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Domain/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/obj/rider.project.model.nuget.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Domain/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/Domain/obj/rider.project.restore.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Persistence/DataContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Persistence/DataContext.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Persistence/Migrations/DataContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Persistence/Migrations/DataContextModelSnapshot.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Persistence/Seed.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Persistence/Seed.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Persistence/obj/Debug/net8.0/Persistence.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Persistence/obj/Debug/net8.0/Persistence.AssemblyInfo.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Persistence/obj/Debug/net8.0/Persistence.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Persistence/obj/Debug/net8.0/Persistence.AssemblyInfoInputs.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Persistence/obj/Debug/net8.0/Persistence.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Persistence/obj/Debug/net8.0/Persistence.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Persistence/obj/Persistence.csproj.nuget.dgspec.json" beforeDir="false" afterPath="$PROJECT_DIR$/Persistence/obj/Persistence.csproj.nuget.dgspec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Persistence/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/Persistence/obj/project.assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Persistence/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Persistence/obj/project.nuget.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Persistence/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/Persistence/obj/project.packagespec.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Persistence/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/Persistence/obj/rider.project.model.nuget.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Persistence/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/Persistence/obj/rider.project.restore.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TODO" beforeDir="false" afterPath="$PROJECT_DIR$/TODO" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client-app/src/app/api/agent.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/api/agent.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/app/common/form/MyTextInput.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/common/form/MyTextInput.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/app/common/form/MyNumberInput.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/common/form/MyNumberInput.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client-app/src/app/layout/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/layout/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/app/layout/main/NavBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/layout/main/NavBar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/app/layout/main/NavBar.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/app/models/ingredient.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/models/ingredient.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/app/models/recipe.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/models/recipe.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/app/models/user.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/models/user.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client-app/src/app/router/Routes.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/router/Routes.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/app/stores/commonStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/stores/commonStore.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/app/stores/ingredientStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/stores/ingredientStore.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/app/stores/recipeStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/stores/recipeStore.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client-app/src/app/stores/store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/stores/store.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/features/errors/TestError.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/features/errors/TestError.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client-app/src/features/errors/ValidationError.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/features/errors/ValidationErrors.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/app/stores/userStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/app/stores/userStore.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/features/errors/NotFound.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/features/errors/NotFound.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/features/errors/ValidationErrors.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/features/errors/ValidationErrors.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client-app/src/features/home/HomePage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/features/home/HomePage.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/client-app/src/features/ingredients/dashboard/IngredientDashboard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/features/ingredients/dashboard/IngredientDashboard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/features/ingredients/dashboard/IngredientFilters.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/features/ingredients/dashboard/IngredientFilters.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/features/ingredients/dashboard/IngredientListItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/features/ingredients/dashboard/IngredientListItem.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/features/ingredients/details/IngredientDetailedHeader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/features/ingredients/details/IngredientDetailedHeader.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/features/ingredients/details/IngredientDetails.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/features/ingredients/details/IngredientDetails.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/features/ingredients/form/IngredientForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/features/ingredients/form/IngredientForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/features/recipes/dashboard/RecipeDashboard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/features/recipes/dashboard/RecipeDashboard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/features/recipes/dashboard/RecipeFilters.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/features/recipes/dashboard/RecipeFilters.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/features/recipes/dashboard/RecipeListItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/features/recipes/dashboard/RecipeListItem.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/features/recipes/details/RecipeDetailedHeader.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/features/recipes/details/RecipeDetailedHeader.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/features/recipes/details/RecipeDetailedInfo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/features/recipes/details/RecipeDetailedInfo.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/features/recipes/details/RecipeDetailedSidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/features/recipes/details/RecipeDetailedSidebar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/features/recipes/details/RecipeDetails.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/features/recipes/details/RecipeDetails.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/features/recipes/form/RecipeForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/features/recipes/form/RecipeForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/features/users/LoginForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/features/users/LoginForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-app/src/features/users/RegisterForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/client-app/src/features/users/RegisterForm.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,8 +180,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="TypeScript File" />
         <option value="TypeScript JSX File" />
+        <option value="TypeScript File" />
       </list>
     </option>
   </component>
@@ -72,13 +204,14 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/zeref-dragneel/DishCraft&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/zeref-dragneel/DishCraft/client-app/src/features&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;ts.external.directory.path&quot;: &quot;/home/zeref-dragneel/DishCraft/client-app/node_modules/typescript/lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
@@ -88,15 +221,29 @@
     ]
   }
 }</component>
+  <component name="ReactDesignerToolWindowState">
+    <option name="myId2Visible">
+      <map>
+        <entry key="com.intellij.reactbuddy.reactComponents" value="false" />
+        <entry key="com.intellij.reactbuddy.reactInspector" value="false" />
+        <entry key="com.intellij.reactbuddy.storybook" value="false" />
+      </map>
+    </option>
+  </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/client-app/src/features" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/client-app/src/app/layout/main/NavBar" />
       <recent name="$PROJECT_DIR$/client-app/src/app/layout" />
+      <recent name="$PROJECT_DIR$/client-app/src/app/layout/styles" />
     </key>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-WS-243.22562.222" />
+        <option value="bundled-js-predefined-d6986cc7102b-76f8388c3a79-JavaScript-WS-243.24978.60" />
       </set>
     </attachedChunks>
   </component>
@@ -126,6 +273,37 @@
       <workItem from="1736344145660" duration="28876000" />
       <workItem from="1736695587890" duration="11204000" />
       <workItem from="1736953344796" duration="812000" />
+      <workItem from="1737121411206" duration="2835000" />
+      <workItem from="1737638403681" duration="1217000" />
+      <workItem from="1737640860411" duration="1508000" />
+      <workItem from="1737645801145" duration="6838000" />
+      <workItem from="1737726745630" duration="2497000" />
+      <workItem from="1737729683543" duration="4640000" />
+      <workItem from="1737735825775" duration="794000" />
+      <workItem from="1737738787433" duration="3429000" />
+      <workItem from="1737818844175" duration="1506000" />
+      <workItem from="1737839766941" duration="919000" />
+      <workItem from="1737901749616" duration="8954000" />
+      <workItem from="1737929641736" duration="1305000" />
+      <workItem from="1738161002968" duration="6338000" />
+      <workItem from="1738332368172" duration="5755000" />
+      <workItem from="1738597319383" duration="3008000" />
+      <workItem from="1738600932099" duration="2268000" />
+      <workItem from="1739117673871" duration="3021000" />
+      <workItem from="1739452090481" duration="4645000" />
+      <workItem from="1739457287374" duration="43000" />
+      <workItem from="1739538044482" duration="6195000" />
+      <workItem from="1739637376963" duration="9570000" />
+      <workItem from="1739653799496" duration="240000" />
+      <workItem from="1739654099259" duration="11000" />
+      <workItem from="1739654189425" duration="2330000" />
+      <workItem from="1739657056111" duration="9247000" />
+      <workItem from="1739740284423" duration="5020000" />
+      <workItem from="1739893167556" duration="2824000" />
+      <workItem from="1739909628302" duration="8046000" />
+      <workItem from="1739976987687" duration="360000" />
+      <workItem from="1739978102343" duration="3272000" />
+      <workItem from="1739984486683" duration="10928000" />
     </task>
     <servers />
   </component>

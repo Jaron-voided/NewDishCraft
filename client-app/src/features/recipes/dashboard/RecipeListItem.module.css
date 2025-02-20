@@ -1,0 +1,134 @@
+.card {
+    margin: 1rem 0;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.topSegment {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    position: relative;
+}
+
+.image {
+    height: 50px;
+    width: 50px;
+    object-fit: contain;
+    border-radius: 50%;
+}
+
+.header {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: teal;
+    text-align: center;
+}
+
+.buttons {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+}
+
+.viewButton,
+.editButton,
+.deleteButton {
+    font-size: 1rem;
+}
+
+.recipeInfoSegment {
+    background-color: lightblue;
+    padding: 1rem;
+}
+
+.recipeInfoGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.nutritionSegment {
+    background-color: lightcoral;
+    padding: 1rem;
+}
+
+.nutritionGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+/*
+!* Main card styling *!
+.card {
+    margin: 1rem 0;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+!* Top row: Image, Name, and Buttons *!
+.topSegment {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    position: relative;
+}
+
+!* Original image size *!
+.image {
+    height: 50px; !* Back to original size *!
+    width: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #ddd;
+}
+
+!* Recipe name *!
+.header {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #264653;
+    text-align: left;
+}
+
+!* Top-right buttons (Edit & View) *!
+.topButtons {
+    display: flex;
+    gap: 0.5rem;
+    position: absolute;
+    top: 0.5rem; !* Push slightly up *!
+    right: 0.5rem; !* Align to top-right *!
+}
+
+.editButton,
+.viewButton {
+    font-size: 1rem;
+}
+
+!* Placeholder content area *!
+.placeholderSegment {
+    background-color: #e76f51;
+    padding: 1rem;
+    text-align: center;
+    font-size: 1rem;
+    color: white;
+}
+
+!* Bottom Row: Delete Button *!
+.bottomSegment {
+    display: flex;
+    justify-content: flex-end;
+    padding: 1rem;
+}
+
+.deleteButton {
+    font-size: 1rem;
+}
+*/

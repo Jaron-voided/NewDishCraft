@@ -53,7 +53,6 @@ export default class UserStore {
             const user = await agent.Account.current();
             runInAction(() => this.user = user);
         } catch (error) {
-            console.log(error);
-        }
+            console.error('Failed to fetch current user:', error);        }
     }
 }

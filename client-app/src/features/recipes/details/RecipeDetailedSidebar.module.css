@@ -1,0 +1,16 @@
+.header {
+    border: none !important;
+}
+
+.measurementsSegment {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.measurementItem {
+    padding: 10px 0 !important;
+}
+
+.editButton {
+    margin-top: 1rem !important;
+}

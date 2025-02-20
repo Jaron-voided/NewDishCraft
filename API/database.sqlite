@@ -1,4 +1,0 @@
-SELECT id, COUNT(*)
-FROM Ingredients
-GROUP BY id
-HAVING COUNT(*) > 1;

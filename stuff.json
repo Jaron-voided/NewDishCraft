@@ -1,0 +1,73 @@
+{
+  "id": "abeb6dd9-c658-4e34-b4bc-f9ba86fe4934",
+  "name": "stuff",
+  "category": "Baking",
+  "pricePerPackage": 2.5,
+  "measurementsPerPackage": 1000,
+  "nutrition": {
+    "ingredientId": "abeb6dd9-c658-4e34-b4bc-f9ba86fe4934",
+    "calories": 364,
+    "carbs": 76,
+    "fat": 1,
+    "protein": 10,
+    "ingredient": {
+      "id": "abeb6dd9-c658-4e34-b4bc-f9ba86fe4934",
+      "name": "stuff",
+      "category": "Baking",
+      "pricePerPackage": 2.5,
+      "measurementsPerPackage": 1000,
+      "nutrition": null,
+      "measurementUnit": {
+        "ingredientId": "abeb6dd9-c658-4e34-b4bc-f9ba86fe4934",
+        "measuredIn": "Weight",
+        "weightUnit": "Kilograms",
+        "volumeUnit": null,
+        "ingredient": null
+      }
+    }
+  },
+  "measurementUnit": {
+    "ingredientId": "abeb6dd9-c658-4e34-b4bc-f9ba86fe4934",
+    "measuredIn": "Weight",
+    "weightUnit": "Kilograms",
+    "volumeUnit": null,
+    "ingredient": {
+      "id": "abeb6dd9-c658-4e34-b4bc-f9ba86fe4934",
+      "name": "stuff",
+      "category": "Baking",
+      "pricePerPackage": 2.5,
+      "measurementsPerPackage": 1000,
+      "nutrition": {
+        "ingredientId": "abeb6dd9-c658-4e34-b4bc-f9ba86fe4934",
+        "calories": 364,
+        "carbs": 76,
+        "fat": 1,
+        "protein": 10,
+        "ingredient": null
+      },
+      "measurementUnit": null
+    }
+  },
+  "appUser": {
+    "displayName": "Bob",
+    "bio": null,
+    "ingredients": [],
+    "recipes": [],
+    "id": "746d6986-cbf9-4221-8350-21f7daa42c7b",
+    "userName": "bob",
+    "normalizedUserName": "BOB",
+    "email": "bob@test.com",
+    "normalizedEmail": "BOB@TEST.COM",
+    "emailConfirmed": false,
+    "passwordHash": "AQAAAAIAAYagAAAAEMHqtrsriZf5JWCCQOvZtAc8G3DoIswXf0yKcBsmKVJyNgcRYjxRRfTYyP76h8DubA==",
+    "securityStamp": "FT2L6QAEFPONN5OZFZPZ7MV2VIMAQWZL",
+    "concurrencyStamp": "b2f085d0-80c0-44fc-9d6e-1058d863a83d",
+    "phoneNumber": null,
+    "phoneNumberConfirmed": false,
+    "twoFactorEnabled": false,
+    "lockoutEnd": null,
+    "lockoutEnabled": true,
+    "accessFailedCount": 0
+  },
+  "appUserId": "746d6986-cbf9-4221-8350-21f7daa42c7b"
+}

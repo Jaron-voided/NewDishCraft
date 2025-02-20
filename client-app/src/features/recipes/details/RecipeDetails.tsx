@@ -7,19 +7,39 @@ import {useEffect} from "react";
 import RecipeDetailedInfo from "./RecipeDetailedInfo.tsx";
 import RecipeDetailedHeader from "./RecipeDetailedHeader.tsx";
 import RecipeDetailedSidebar from "./RecipeDetailedSidebar.tsx";
+import {expandMeasurements} from "../../../app/Utilities/expandMeasurements.ts";
 
 
 
 export default observer(function RecipeDetails() {
-    const {recipeStore} = useStore();
+    const {recipeStore, ingredientStore} = useStore();
     const {selectedRecipe: recipe, loadRecipe, loadingInitial} = recipeStore;
     const {id} = useParams();
 
     useEffect(() => {
-        if (id) loadRecipe(id);
+        if (id) {
+            console.log('Loading recipe:', id);
+            if (ingredientStore.ingredientRegistry.size == 0) {
+                ingredientStore.loadIngredients().then(() => {
+                    // Only load recipe after ingredients are loaded
+                    loadRecipe(id)
+                    console.log('Recipe data:', recipe);
+                    console.log('Recipe measurements:', recipe?.measurements);
+                    console.log('Recipe nutrition:', recipe?.nutrition);
+                });
+            } else {
+                loadRecipe(id)
+                console.log('Recipe data:', recipe);
+                console.log('Recipe measurements:', recipe?.measurements);
+                console.log('Recipe nutrition:', recipe?.nutrition);
+            }
+        }
     }, [id, loadRecipe]);
 
     if (loadingInitial || !recipe) return <LoadingComponent />;
+
+    const fullMeasurements = recipe.measurements || null;
+    //const fullMeasurements = expandMeasurements(recipe, ingredientStore);
 
     return (
         <Grid>
@@ -28,7 +48,7 @@ export default observer(function RecipeDetails() {
                 <RecipeDetailedInfo recipe={recipe}/>
             </Grid.Column>
             <Grid.Column width={6}>
-                <RecipeDetailedSidebar />
+                <RecipeDetailedSidebar measurements={fullMeasurements} />
             </Grid.Column>
         </Grid>
     )

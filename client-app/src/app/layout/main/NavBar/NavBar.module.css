@@ -1,0 +1,193 @@
+/* General navbar styles */
+.navBar {
+    background-color: #1b1c1d;
+    padding: 0;
+    z-index: 10;
+}
+
+/* Container to organize the layout */
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 2rem;
+}
+
+/* Logo and text section */
+.logoSection {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.logo {
+    height: 3rem;
+    width: auto;
+}
+
+.logoText {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+}
+
+/* Centered navigation buttons */
+.navButtonsContainer {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    flex-grow: 1;
+}
+
+/* Dropdown styles */
+.navDropdown {
+    font-size: 1.3rem !important;
+    padding: 0.8rem 1.8rem !important;
+    min-width: 12rem !important;
+    text-align: center !important;
+}
+
+.navDropdown .menu {
+    min-width: 200px !important;
+    margin-top: 0 !important;
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+}
+
+/* Specific dropdown styles */
+.ingredientsDropdown {
+    background-color: #00b5ad !important;
+}
+
+.ingredientsDropdown .menu {
+    background-color: #00b5ad !important;
+}
+
+.recipesDropdown {
+    background-color: #db2828 !important;
+}
+
+.recipesDropdown .menu {
+    background-color: #db2828 !important;
+}
+
+.dayPlansDropdown {
+    background-color: #e03997 !important;
+}
+
+.dayPlansDropdown .menu {
+    background-color: #e03997 !important;
+}
+
+/* Style for dropdown items */
+.navDropdown .item {
+    color: white !important;
+}
+
+.navDropdown .item:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* User section for profile image and dropdown */
+.userSection {
+    display: flex;
+    align-items: center;
+}
+
+.avatar {
+    height: 2.5rem !important;
+    width: 2.5rem !important;
+    border-radius: 50% !important;
+    margin-right: 0.5rem !important;
+}
+
+.userDropdown {
+    font-size: 1.2rem !important;
+    font-weight: bold !important;
+    padding: 0.5rem 1rem !important;
+    background-color: #2185d0 !important;
+    color: white !important;
+    border-radius: 0.3rem !important;
+    transition: background-color 0.3s ease !important;
+}
+
+.userDropdown:hover {
+    background-color: #1678c2 !important;
+}
+
+.userDropdown .menu {
+    min-width: 200px !important;
+}
+/*
+!* General navbar styles *!
+.navBar {
+    background-color: #1b1c1d; !* Matches Semantic UI inverted color *!
+    padding: 0;
+    z-index: 10;
+}
+
+!* Container to organize the layout *!
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+!* Logo and text section *!
+.logoSection {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.logo {
+    height: 3rem;
+    width: auto;
+}
+
+.logoText {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+}
+
+!* Centered navigation buttons *!
+.navButtonsContainer {
+    display: flex;
+    flex-wrap: nowrap; !* Prevents buttons from wrapping *!
+    justify-content: center; !* Centers the buttons *!
+    align-items: center;
+    gap: 1.5rem; !* Space between buttons *!
+    flex-grow: 1; !* Ensures this section stretches to take up space *!
+}
+
+!* All buttons styled uniformly *!
+.navButton {
+    font-size: 1.2rem;
+    padding: 0.7rem 1.5rem; !* Ensures consistent button size *!
+    min-width: 10rem; !* Ensures buttons are the same width *!
+    text-align: center; !* Centers the button text *!
+}
+
+!* User section for profile image and dropdown *!
+.userSection {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.avatar {
+    height: 2.5rem;
+    width: 2.5rem;
+    border-radius: 50%; !* Ensures the image is circular *!
+}
+
+.userDropdown {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+*/

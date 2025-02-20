@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 using Domain.Enums;
 
 #nullable enable
@@ -24,4 +25,8 @@ public class Ingredient
     
     public NutritionalInfo? Nutrition { get; set; }
     public MeasurementUnit? MeasurementUnit { get; set; }
+    [JsonIgnore]
+    public AppUser? AppUser { get; set; } // Navigation property
+    [JsonIgnore]
+    public string? AppUserId { get; set; } // Foreign key
 }

@@ -1,6 +1,7 @@
 using Application.Core;
 using AutoMapper;
 using Domain;
+using Domain.Enums;
 using Domain.Models;
 using FluentValidation;
 using MediatR;
@@ -13,15 +14,14 @@ public class Edit
 {
     public class Command : IRequest<Result<Unit>>
     {
-        public Ingredient Ingredient { get; set; }
+        public IngredientDto IngredientDto { get; set; }
     }
-    
+
     public class CommandValidator : AbstractValidator<Command>
     {
         public CommandValidator()
         {
-            RuleFor(x => x.Ingredient).SetValidator(new IngredientValidator());
-            
+            RuleFor(x => x.IngredientDto).SetValidator(new IngredientValidator());
         }
     }
 
@@ -38,72 +38,64 @@ public class Edit
 
         public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
         {
+            Console.WriteLine($"Ingredient dto name: {request.IngredientDto.Name}");
+
             var ingredient = await _context.Ingredients
                 .Include(i => i.Nutrition)
-                .Include(i => i.MeasurementUnit)
-                .FirstOrDefaultAsync(i => i.Id == request.Ingredient.Id);
-                //.FindAsync(request.Ingredient.Id);
-                
-            if (ingredient == null) return null;
-            
-            _mapper.Map(request.Ingredient, ingredient);
+                .Include(i => i.MeasurementUnit) // ✅ Ensure MeasurementUnit is loaded
+                .FirstOrDefaultAsync(i => i.Id == request.IngredientDto.Id);
 
-            if (request.Ingredient.Nutrition != null)
+            if (ingredient == null)
             {
-                // Ensure Nutrition exists
-                if (ingredient.Nutrition == null)
-                {
-                    // Add new Nutrition if it doesn't exist
-                    ingredient.Nutrition = new NutritionalInfo
-                    {
-                        IngredientId = ingredient.Id,
-                        Calories = request.Ingredient.Nutrition.Calories,
-                        Carbs = request.Ingredient.Nutrition.Carbs,
-                        Fat = request.Ingredient.Nutrition.Fat,
-                        Protein = request.Ingredient.Nutrition.Protein
-                    };
-                    _context.NutritionalInfos.Add(ingredient.Nutrition);
-                }
-                else
-                {
-                    // Update existing Nutrition
-                    ingredient.Nutrition.Calories = request.Ingredient.Nutrition.Calories;
-                    ingredient.Nutrition.Carbs = request.Ingredient.Nutrition.Carbs;
-                    ingredient.Nutrition.Fat = request.Ingredient.Nutrition.Fat;
-                    ingredient.Nutrition.Protein = request.Ingredient.Nutrition.Protein;
-                }
-            }
-            
-            if (request.Ingredient.MeasurementUnit != null)
-            {
-                if (ingredient.MeasurementUnit == null)
-                {
-                    // Add new MeasurementUnit if it doesn't exist
-                    ingredient.MeasurementUnit = new MeasurementUnit
-                    {
-                        IngredientId = ingredient.Id,
-                        MeasuredIn = request.Ingredient.MeasurementUnit.MeasuredIn,
-                        WeightUnit = request.Ingredient.MeasurementUnit.WeightUnit,
-                        VolumeUnit = request.Ingredient.MeasurementUnit.VolumeUnit
-                    };
-                    _context.MeasurementUnits.Add(ingredient.MeasurementUnit);
-                }
-                else
-                {
-                    // Update existing MeasurementUnit
-                    ingredient.MeasurementUnit.MeasuredIn = request.Ingredient.MeasurementUnit.MeasuredIn;
-                    ingredient.MeasurementUnit.WeightUnit = request.Ingredient.MeasurementUnit.WeightUnit;
-                    ingredient.MeasurementUnit.VolumeUnit = request.Ingredient.MeasurementUnit.VolumeUnit;
-                }
+                Console.WriteLine($"Ingredient with ID {request.IngredientDto.Id} not found.");
+                return Result<Unit>.Failure("Ingredient not found");
             }
 
-            
+            Console.WriteLine($"Found ingredient: {ingredient.Name}, ID: {ingredient.Id}");
+
+            // ✅ Map DTO properties to Ingredient (excluding MeasurementUnit)
+            _mapper.Map(request.IngredientDto, ingredient);
+            Console.WriteLine($"Mapped Ingredient: {ingredient.Id}, AppUserId: {ingredient.AppUserId}");
+
+            // ✅ Manually update MeasurementUnit instead of letting AutoMapper overwrite it
+            if (ingredient.MeasurementUnit != null)
+            {
+                Console.WriteLine($"Updating existing MeasurementUnit for {ingredient.Name}");
+                ingredient.MeasurementUnit.MeasuredIn = Enum.Parse<MeasuredIn>(request.IngredientDto.MeasuredIn);
+                _context.Entry(ingredient.MeasurementUnit).Property(m => m.MeasuredIn).IsModified = true;
+            }
+
+            // ✅ Handle Nutrition updates
+            if (ingredient.Nutrition == null)
+            {
+                Console.WriteLine($"Nutrition was NULL for {ingredient.Name}. Creating new one...");
+                ingredient.Nutrition = new NutritionalInfo
+                {
+                    IngredientId = ingredient.Id,
+                    Calories = request.IngredientDto.Nutrition.Calories,
+                    Carbs = request.IngredientDto.Nutrition.Carbs,
+                    Fat = request.IngredientDto.Nutrition.Fat,
+                    Protein = request.IngredientDto.Nutrition.Protein
+                };
+                _context.NutritionalInfos.Add(ingredient.Nutrition);
+            }
+            else
+            {
+                Console.WriteLine($"Updating existing Nutrition for {ingredient.Name}");
+                ingredient.Nutrition.Calories = request.IngredientDto.Nutrition.Calories;
+                ingredient.Nutrition.Carbs = request.IngredientDto.Nutrition.Carbs;
+                ingredient.Nutrition.Fat = request.IngredientDto.Nutrition.Fat;
+                ingredient.Nutrition.Protein = request.IngredientDto.Nutrition.Protein;
+
+                _context.Entry(ingredient.Nutrition).Property(n => n.Calories).IsModified = true;
+                _context.Entry(ingredient.Nutrition).Property(n => n.Carbs).IsModified = true;
+                _context.Entry(ingredient.Nutrition).Property(n => n.Fat).IsModified = true;
+                _context.Entry(ingredient.Nutrition).Property(n => n.Protein).IsModified = true;
+            }
+
             var result = await _context.SaveChangesAsync() > 0;
-            
-            if (!result) return Result<Unit>.Failure("Failed to update ingredient");
-            
-            return Result<Unit>.Success(Unit.Value);
 
+            return result ? Result<Unit>.Success(Unit.Value) : Result<Unit>.Failure("Failed to update ingredient.");
         }
     }
 }

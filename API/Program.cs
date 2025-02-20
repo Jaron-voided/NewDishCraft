@@ -8,6 +8,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Persistence;
+using System.Runtime.CompilerServices;
+using Microsoft.AspNetCore.Authentication;
+
+[assembly: InternalsVisibleTo("DishCraft.Tests")]
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,9 +32,19 @@ builder.Services.AddControllers(opt =>
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
 
+var env = builder.Environment;
 
-builder.Services.AddApplicationServices(builder.Configuration);
-builder.Services.AddIdentityServices(builder.Configuration);
+if (!env.IsEnvironment("Test")) // Production Mode
+{
+    builder.Services.AddApplicationServices(builder.Configuration);
+    builder.Services.AddIdentityServices(builder.Configuration);
+}
+else // Test Mode
+{
+    builder.Services.AddApplicationServices(builder.Configuration, useDatabase: false); // Pass a flag to skip SQLite
+}
+
+
 
 var app = builder.Build();
 
@@ -57,9 +72,14 @@ var services = scope.ServiceProvider;
 try
 {
     var context = services.GetRequiredService<DataContext>();
-    var userManager = services.GetRequiredService<UserManager<AppUser>>();
-    await context.Database.MigrateAsync();
-    await Seed.SeedData(context, userManager);
+
+    // Ensure migrations only run if using a relational database
+    if (context.Database.ProviderName != "Microsoft.EntityFrameworkCore.InMemory")
+    {
+        var userManager = services.GetRequiredService<UserManager<AppUser>>();
+        await context.Database.MigrateAsync();
+        //await Seed.SeedData(context, userManager);
+    }
 }
 catch (Exception ex)
 {
@@ -68,3 +88,5 @@ catch (Exception ex)
 }
 
 app.Run();
+
+public partial class Program { }

@@ -46,7 +46,7 @@ export default observer (function IngredientDetailedHeader({ingredient}: Props) 
             <Segment clearing attached='bottom'>
                 <Button color='teal'>Join Ingredient</Button>
                 <Button>Cancel attendance</Button>
-                <Button as={Link} to={`/manage/${ingredient.id}`} color='orange' floated='right'>
+                <Button as={Link} to={`/ingredients/manage/${ingredient.id}`} color='orange' floated='right'>
                     Manage Event
                 </Button>
             </Segment>

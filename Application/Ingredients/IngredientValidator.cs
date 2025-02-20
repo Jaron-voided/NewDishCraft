@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace Application.Ingredients;
 
-public class IngredientValidator : AbstractValidator<Ingredient>
+public class IngredientValidator : AbstractValidator<IngredientDto>
 {
     public IngredientValidator()
     {

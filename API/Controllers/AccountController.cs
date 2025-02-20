@@ -22,6 +22,8 @@ public class AccountController : ControllerBase
         _userManager = userManager;
         _tokenService = tokenService;
     }
+    
+    
     [AllowAnonymous]
     [HttpPost("login")]
     public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
@@ -37,6 +39,7 @@ public class AccountController : ControllerBase
         }
         return Unauthorized();
     }
+    
     [AllowAnonymous]
     [HttpPost("register")]
     public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
@@ -67,18 +70,36 @@ public class AccountController : ControllerBase
             return CreateUserObject(user);
         }
         
-        return BadRequest("Problem registering user");
+        return BadRequest(result.Errors);
     }
 
-
-
+    [Authorize]
     [HttpGet]
     public async Task<ActionResult<UserDto>> GetCurrentUser()
+    {
+        var email = User?.FindFirstValue(ClaimTypes.Email);
+
+        if (string.IsNullOrEmpty(email))
+        {
+            return Unauthorized("Email claim not found in token.");
+        }
+
+        var user = await _userManager.FindByEmailAsync(email);
+
+        if (user == null)
+        {
+            return Unauthorized("User not found.");
+        }
+
+        return CreateUserObject(user);
+    }
+
+    /*public async Task<ActionResult<UserDto>> GetCurrentUser()
     {
         var user = await _userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
 
         return CreateUserObject(user);
-    }
+    }*/
     
     private UserDto CreateUserObject(AppUser user)
     {

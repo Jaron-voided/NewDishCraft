@@ -1,4 +1,4 @@
-import NavBar from "./main/NavBar.tsx";
+import NavBar from "./main/NavBar/NavBar.tsx";
 import {Container} from "semantic-ui-react";
 import {observer} from "mobx-react-lite";
 import {Outlet, useLocation} from "react-router-dom";

@@ -1,0 +1,89 @@
+
+### Create an Ingredient
+POST http://localhost:5000/api/ingredients
+Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImJvYiIsIm5hbWVpZCI6Ijc0NmQ2OTg2LWNiZjktNDIyMS04MzUwLTIxZjdkYWE0MmM3YiIsImVtYWlsIjoiYm9iQHRlc3QuY29tIiwibmJmIjoxNzM5MDI3NjUxLCJleHAiOjE3Mzk2MzI0NTEsImlhdCI6MTczOTAyNzY1MX0.oBFzkkXg7GaYfnft8V6B4ce_VBazQT_h7nrGYHhICogoYt6GQAWTX14UtGjcoILy9cQOEPWbqFfOvK1Go4kLMQ
+Content-Type: application/json
+
+{
+  "name": "Tomato",
+  "category": "Vegetable",
+  "measuredIn": "Weight",
+  "pricePerPackage": 5.00,
+  "measurementsPerPackage": 1000,
+  "calories": 18,
+  "carbs": 3.9,
+  "fat": 0.2,
+  "protein": 0.9
+}
+
+###
+
+### Create a Recipe
+POST http://localhost:5000/api/recipes
+Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImJvYiIsIm5hbWVpZCI6Ijc0NmQ2OTg2LWNiZjktNDIyMS04MzUwLTIxZjdkYWE0MmM3YiIsImVtYWlsIjoiYm9iQHRlc3QuY29tIiwibmJmIjoxNzM5MDI3NjUxLCJleHAiOjE3Mzk2MzI0NTEsImlhdCI6MTczOTAyNzY1MX0.oBFzkkXg7GaYfnft8V6B4ce_VBazQT_h7nrGYHhICogoYt6GQAWTX14UtGjcoILy9cQOEPWbqFfOvK1Go4kLMQ
+Content-Type: application/json
+
+{
+  "name": "Tomato Soup",
+  "recipeCategory": "Soup",
+  "servingsPerRecipe": 4,
+  "instructions": ["Chop tomatoes", "Boil water", "Cook and blend"],
+  "caloriesPerRecipe": 100,
+  "carbsPerRecipe": 20,
+  "fatPerRecipe": 1,
+  "proteinPerRecipe": 2
+}
+
+###
+
+### Create a Measurement (link Ingredient to Recipe)
+POST http://localhost:5000/api/measurements
+Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImJvYiIsIm5hbWVpZCI6Ijc0NmQ2OTg2LWNiZjktNDIyMS04MzUwLTIxZjdkYWE0MmM3YiIsImVtYWlsIjoiYm9iQHRlc3QuY29tIiwibmJmIjoxNzM5MDI3NjUxLCJleHAiOjE3Mzk2MzI0NTEsImlhdCI6MTczOTAyNzY1MX0.oBFzkkXg7GaYfnft8V6B4ce_VBazQT_h7nrGYHhICogoYt6GQAWTX14UtGjcoILy9cQOEPWbqFfOvK1Go4kLMQ
+Content-Type: application/json
+
+{
+  "recipeId": "00b41c08-188f-497a-971d-c32ae4be1cd1",
+  "ingredientId": "9d1580a9-e778-497b-9fb6-385f6b48a432",
+  "amount": 500
+}
+
+###
+
+### Create a DayPlan (with AppUserId)
+POST http://localhost:5000/api/dayplan
+Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImJvYiIsIm5hbWVpZCI6Ijc0NmQ2OTg2LWNiZjktNDIyMS04MzUwLTIxZjdkYWE0MmM3YiIsImVtYWlsIjoiYm9iQHRlc3QuY29tIiwibmJmIjoxNzM5MDI3NjUxLCJleHAiOjE3Mzk2MzI0NTEsImlhdCI6MTczOTAyNzY1MX0.oBFzkkXg7GaYfnft8V6B4ce_VBazQT_h7nrGYHhICogoYt6GQAWTX14UtGjcoILy9cQOEPWbqFfOvK1Go4kLMQ
+Content-Type: application/json
+
+{
+  "name": "My First DayPlan",
+  "appUserId": "746d6986-cbf9-4221-8350-21f7daa42c7b",
+  "dayPlanRecipes": [
+    {
+      "recipeId": "00b41c08-188f-497a-971d-c32ae4be1cd1",
+      "servings": 2
+    }
+  ]
+}
+
+###
+
+### Get a DayPlan by ID
+GET http://localhost:5000/api/dayplan/YOUR_DAYPLAN_ID
+Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImJvYiIsIm5hbWVpZCI6Ijc0NmQ2OTg2LWNiZjktNDIyMS04MzUwLTIxZjdkYWE0MmM3YiIsImVtYWlsIjoiYm9iQHRlc3QuY29tIiwibmJmIjoxNzM5MDI3NjUxLCJleHAiOjE3Mzk2MzI0NTEsImlhdCI6MTczOTAyNzY1MX0.oBFzkkXg7GaYfnft8V6B4ce_VBazQT_h7nrGYHhICogoYt6GQAWTX14UtGjcoILy9cQOEPWbqFfOvK1Go4kLMQ
+
+###
+
+### Update a DayPlan
+PUT http://localhost:5000/api/dayplan/YOUR_DAYPLAN_ID
+Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImJvYiIsIm5hbWVpZCI6Ijc0NmQ2OTg2LWNiZjktNDIyMS04MzUwLTIxZjdkYWE0MmM3YiIsImVtYWlsIjoiYm9iQHRlc3QuY29tIiwibmJmIjoxNzM5MDI3NjUxLCJleHAiOjE3Mzk2MzI0NTEsImlhdCI6MTczOTAyNzY1MX0.oBFzkkXg7GaYfnft8V6B4ce_VBazQT_h7nrGYHhICogoYt6GQAWTX14UtGjcoILy9cQOEPWbqFfOvK1Go4kLMQ
+Content-Type: application/json
+
+{
+  "name": "Updated Test DayPlan"
+}
+
+###
+
+### Delete a DayPlan
+DELETE http://localhost:5000/api/dayplan/YOUR_DAYPLAN_ID
+Authorization: Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6ImJvYiIsIm5hbWVpZCI6Ijc0NmQ2OTg2LWNiZjktNDIyMS04MzUwLTIxZjdkYWE0MmM3YiIsImVtYWlsIjoiYm9iQHRlc3QuY29tIiwibmJmIjoxNzM5MDI3NjUxLCJleHAiOjE3Mzk2MzI0NTEsImlhdCI6MTczOTAyNzY1MX0.oBFzkkXg7GaYfnft8V6B4ce_VBazQT_h7nrGYHhICogoYt6GQAWTX14UtGjcoILy9cQOEPWbqFfOvK1Go4kLMQ

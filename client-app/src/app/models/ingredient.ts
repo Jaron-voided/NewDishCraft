@@ -33,24 +33,75 @@ export enum IngredientCategory {
 
 
 // Interfaces
+// Ingredient Model
 export interface Ingredient {
-    id: string
-    name: string
-    category: IngredientCategory
-    pricePerPackage: number
-    measurementsPerPackage: number
-    nutrition?: Nutrition // Optional because it might not be set
-    measurementUnit?: MeasurementUnit // Optional because it might not be set
+    id: string;
+    name: string;
+    category: string;
+    pricePerPackage: number;
+    measurementsPerPackage: number;
+    measurementUnit: MeasurementUnit;
+    measuredIn?: string | null;
+    nutrition?: NutritionalInfo | null;
+    pricePerMeasurement?: number;
+    appUserId?: string;
+    appUserDisplayName?: string | null;
 }
+/*
+export interface Ingredient {
+    id: string;
+    name: string;
+    category: string; // Now a string instead of an enum
+    //measuredIn: string; // Now a string instead of an enum
+    pricePerPackage: number;
+    measurementsPerPackage: number;
 
-export interface Nutrition {
+    measurementUnit: {
+        ingredientId: string;
+        measuredIn: MeasuredIn;
+        weightUnit?: WeightUnit;
+        volumeUnit?: VolumeUnit;
+    };
+
+    nutrition: {
+        ingredientId: string;
+        calories: number;
+        protein: number;
+        carbs: number;
+        fat: number;
+    };
+
+    pricePerMeasurement?: number; // New computed property from the DTO
+/!*
+
+    // Flattened nutritional values
+    calories: number;
+    carbs: number;
+    fat: number;
+    protein: number;
+*!/
+
+    // User ownership properties
+    appUserId?: string;
+    appUserDisplayName?: string | null;
+}
+*/
+
+export interface NutritionalInfo {
+    ingredientId: string;
+    calories: number;
+    carbs: number;
+    fat: number;
+    protein: number;
+}
+/*export interface Nutrition {
     ingredientId: string
     calories: number
     carbs: number
     fat: number
     protein: number
     ingredient?: Ingredient | null // Optional and nullable
-}
+}*/
 
 export interface MeasurementUnit {
     ingredientId: string

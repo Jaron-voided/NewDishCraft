@@ -1,0 +1,19 @@
+.header {
+    margin-bottom: 1.5rem;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.row {
+    display: flex;
+    gap: 1rem;
+}
+
+.field {
+    flex: 1;
+    min-width: 200px;
+}

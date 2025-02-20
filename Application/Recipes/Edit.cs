@@ -1,70 +1,100 @@
+using Application.Core;
+using Application.Interfaces;
 using AutoMapper;
 using Domain.Models;
+using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Persistence;
 
 namespace Application.Recipes;
 
 public class Edit
 {
-    public class Command : IRequest
+    public class Command : IRequest<Result<Unit>>
     {
-        public Recipe Recipe { get; set; }
+        //public Guid Id { get; set; }
+        public RecipeDto RecipeDto { get; set; }
     }
 
-    public class Handler : IRequestHandler<Command>
+    public class CommandValidator : AbstractValidator<Command>
+    {
+        public CommandValidator()
+        {
+            RuleFor(x => x.RecipeDto).SetValidator(new RecipeValidator());
+        }
+    }
+
+    public class Handler : IRequestHandler<Command, Result<Unit>>
     {
         private readonly DataContext _context;
-        private readonly IMediator _mediator;
+        private readonly IUserAccessor _userAccessor;
+        private readonly ILogger<Handler> _logger;
         private readonly IMapper _mapper;
 
-        public Handler(DataContext context, IMediator mediator, IMapper mapper)
+        public Handler(DataContext context, IUserAccessor userAccessor, ILogger<Handler> logger, IMapper mapper)
         {
             _context = context;
-            _mediator = mediator;
+            _userAccessor = userAccessor;
+            _logger = logger;
             _mapper = mapper;
         }
 
-        public async Task Handle(Command request, CancellationToken cancellationToken)
+        public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
         {
+            _logger.LogInformation($"🔍 Fetching Recipe with ID: {request.RecipeDto.Id}");
+            Console.WriteLine($"🔍 Fetching Recipe with ID: {request.RecipeDto.Id}");
+
             var recipe = await _context.Recipes
-                .Include(r => r.Measurements)
-                .FirstOrDefaultAsync(r => r.Id == request.Recipe.Id);
+                .FirstOrDefaultAsync(r => r.Id == request.RecipeDto.Id, cancellationToken);
 
-            if (recipe == null) throw new Exception("Recipe not found");
-
-            _mapper.Map(request.Recipe, recipe);
-
-            if (request.Recipe.Measurements != null && request.Recipe.Measurements.Any())
+            if (recipe == null)
             {
-                foreach (var measurement in request.Recipe.Measurements)
-                {
-                    var existingMeasurement = recipe.Measurements.FirstOrDefault(m
-                        => m.IngredientId == measurement.IngredientId);
-
-                    if (existingMeasurement == null)
-                    {
-                        await _mediator.Send(new Application.Measurements.Create.Command
-                        {
-                            RecipeId = recipe.Id,
-                            IngredientId = measurement.IngredientId,
-                            Amount = measurement.Amount
-                        });
-                    }
-                    else
-                    {
-                        await _mediator.Send(new Application.Measurements.Edit.Command
-                        {
-                            RecipeId = recipe.Id,
-                            IngredientId = measurement.IngredientId,
-                            Amount = measurement.Amount
-                        });
-                    }
-                }
+                _logger.LogWarning($"❌ Recipe with ID {request.RecipeDto.Id} not found.");
+                Console.WriteLine($"❌ Recipe with ID {request.RecipeDto.Id} not found.");
+                return Result<Unit>.Failure("Recipe not found");
             }
-            
-            await _context.SaveChangesAsync();
+
+            var username = _userAccessor.GetUsername();
+            _logger.LogInformation($"✅ Retrieved username: {username}");
+            Console.WriteLine($"✅ Retrieved username: {username}");
+
+            if (string.IsNullOrEmpty(username))
+            {
+                _logger.LogWarning("❌ Unable to retrieve the logged-in user.");
+                return Result<Unit>.Failure("Unauthorized");
+            }
+
+            // **Ensure the user owns the recipe**
+            if (recipe.AppUserId != request.RecipeDto.AppUserId)
+            {
+                _logger.LogWarning($"❌ Unauthorized user {username} attempted to edit recipe {recipe.Id}");
+                return Result<Unit>.Failure("Unauthorized");
+            }
+
+            // **Map changes from DTO**
+            _mapper.Map(request.RecipeDto, recipe);
+
+            _logger.LogInformation($"🛠️ Updating recipe '{recipe.Name}'...");
+            Console.WriteLine($"🛠️ Updating recipe '{recipe.Name}'...");
+
+            var result = await _context.SaveChangesAsync(cancellationToken) > 0;
+
+            if (!result)
+            {
+                _logger.LogError($"❌ Failed to update recipe '{recipe.Name}'.");
+                Console.WriteLine($"❌ Failed to update recipe '{recipe.Name}'.");
+                return Result<Unit>.Failure("Failed to update recipe.");
+            }
+
+            _logger.LogInformation($"✅ Recipe '{recipe.Name}' successfully updated.");
+            Console.WriteLine($"✅ Recipe '{recipe.Name}' successfully updated.");
+
+            return result ? Result<Unit>.Success(Unit.Value) : Result<Unit>.Failure("Failed to update recipe.");
+            /*
+            return Result<Unit>.Success(_mapper.Map(request.RecipeDto, recipe));
+        */
         }
     }
 }

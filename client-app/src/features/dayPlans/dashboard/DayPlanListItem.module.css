@@ -1,0 +1,51 @@
+.card {
+    margin: 1rem 0 !important;
+}
+
+.topSegment {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+}
+
+.image {
+    width: 100px !important;
+    height: 100px !important;
+    object-fit: cover !important;
+}
+
+.header {
+    font-size: 1.2em !important;
+    margin-bottom: 0.5rem !important;
+}
+
+.topButtons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.nutritionGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    text-align: center;
+}
+
+.infoGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    text-align: center;
+}
+
+.nutritionSegment, .infoSegment {
+    padding: 1rem !important;
+}
+
+.bottomSegment {
+    padding: 0.75rem !important;
+}
+
+.deleteButton {
+    margin: 0 !important;
+}

@@ -8,15 +8,15 @@ public class MeasurementsController : BaseApiController
 {
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Measurement>>> GetMeasurements()
+    public async Task<ActionResult<IEnumerable<MeasurementDto>>> GetMeasurements()
     {
         return Ok(await Mediator.Send(new List.Query()));
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Measurement>> GetMeasurement(Guid id)
+    public async Task<ActionResult<MeasurementDto>> GetMeasurement(Guid id)
     {
-        return await Mediator.Send(new Details.Query { Id = id });
+        return Ok(await Mediator.Send(new Details.Query { Id = id }));
     }
 
     [HttpGet("by-recipe/{recipeId}")]

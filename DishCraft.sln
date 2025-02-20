@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistence", "Persistence\Persistence.csproj", "{A8765869-FB5A-4606-8AFC-CFEE74B7D8C0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{F8549CF9-AE57-403A-AB07-853DCD49FFDE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DishCraft.Tests", "Tests\DishCraft.Tests.csproj", "{0AA1D3A0-57C9-4FAA-AA7F-50B48B839153}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +40,13 @@ Global
 		{A8765869-FB5A-4606-8AFC-CFEE74B7D8C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8765869-FB5A-4606-8AFC-CFEE74B7D8C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A8765869-FB5A-4606-8AFC-CFEE74B7D8C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8549CF9-AE57-403A-AB07-853DCD49FFDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8549CF9-AE57-403A-AB07-853DCD49FFDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8549CF9-AE57-403A-AB07-853DCD49FFDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8549CF9-AE57-403A-AB07-853DCD49FFDE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AA1D3A0-57C9-4FAA-AA7F-50B48B839153}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AA1D3A0-57C9-4FAA-AA7F-50B48B839153}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AA1D3A0-57C9-4FAA-AA7F-50B48B839153}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AA1D3A0-57C9-4FAA-AA7F-50B48B839153}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -1,10 +1,11 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using Domain.Enums;
 
-namespace Domain.Models;
-
 #nullable enable
+
+namespace Domain.Models;
 
 public class Recipe
 {
@@ -34,4 +35,9 @@ public class Recipe
 
     // Navigation Property
     public ICollection<Measurement>? Measurements { get; set; }
+    
+    [JsonIgnore]
+    public AppUser? AppUser { get; set; } // Navigation property
+    [JsonIgnore]
+    public string? AppUserId { get; set; } // Foreign key
 }

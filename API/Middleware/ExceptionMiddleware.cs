@@ -25,8 +25,11 @@ public class ExceptionMiddleware
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, ex.Message);
-            context.Response.ContentType = "application/json";
+            _logger.LogError(ex, "An error occurred: {Message}", ex.Message);
+            if (ex.InnerException != null)
+            {
+                _logger.LogError("Inner exception: {InnerException}", ex.InnerException.Message);
+            }            context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
             
             var response = _env.IsDevelopment()

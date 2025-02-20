@@ -1,0 +1,43 @@
+/* Header styling */
+.header {
+    margin-bottom: 1.5rem;
+}
+
+/* Form container */
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Row layout for Name, Category, and Servings */
+.row {
+    display: flex;
+    gap: 1rem;
+    align-items: center; /* Ensures everything aligns properly */
+}
+
+/* Ensuring fields in the row are evenly spaced */
+.field {
+    flex: 1;
+    min-width: 200px;
+}
+
+/* Labels should align properly */
+.field label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.3rem;
+}
+
+/* Full-width instructions input */
+.fullWidth {
+    width: 100%;
+}
+
+/* Ensure dynamically added ingredient rows align properly */
+.dynamicRow {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}

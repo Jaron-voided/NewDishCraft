@@ -1,72 +1,110 @@
 using Application.Core;
+using Application.Interfaces;
+using AutoMapper;
 using Domain.Models;
 using FluentValidation;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Persistence;
 
 namespace Application.Ingredients;
 
 public class Create
 {
-    public class Command : IRequest<Result<Unit>>
+    public class Command : IRequest<Result<IngredientDto>>
     {
-        public Ingredient Ingredient { get; set; }
+        public IngredientDto IngredientDto { get; set; }
     }
 
     public class CommandValidator : AbstractValidator<Command>
     {
         public CommandValidator()
         {
-            RuleFor(x => x.Ingredient).SetValidator(new IngredientValidator());
-            
+            RuleFor(x => x.IngredientDto).SetValidator(new IngredientValidator());
         }
     }
 
-    public class Handler : IRequestHandler<Command, Result<Unit>>
+    public class Handler : IRequestHandler<Command, Result<IngredientDto>>
     {
         private readonly DataContext _context;
+        private readonly IUserAccessor _userAccessor;
+        private readonly ILogger<Handler> _logger;
+        private readonly IMapper _mapper;
 
-        public Handler(DataContext context)
+        public Handler(DataContext context, IUserAccessor userAccessor, ILogger<Handler> logger, IMapper mapper)
         {
             _context = context;
+            _userAccessor = userAccessor;
+            _logger = logger;
+            _mapper = mapper;
         }
 
-        public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
+        public async Task<Result<IngredientDto>> Handle(Command request, CancellationToken cancellationToken)
         {
-            // Step 1: Add the Ingredient and save to generate its ID
-            _context.Ingredients.Add(request.Ingredient);
-            //await _context.SaveChangesAsync(cancellationToken); // Generate Ingredient.Id here
+            _logger.LogInformation("🔍 Fetching the logged-in user...");
+            Console.WriteLine("🔍 Fetching the logged-in user...");
 
-            // Step 2: Handle MeasurementUnit
-            if (request.Ingredient.MeasurementUnit != null)
+            var username = _userAccessor.GetUsername();
+            _logger.LogInformation($"✅ Retrieved username: {username}");
+            Console.WriteLine($"✅ Retrieved username: {username}");
+
+            if (string.IsNullOrEmpty(username))
             {
-                if (request.Ingredient.MeasurementUnit.IngredientId == null)
-                {
-                    request.Ingredient.MeasurementUnit.IngredientId = request.Ingredient.Id;
-                }
-
-                _context.MeasurementUnits.Add(request.Ingredient.MeasurementUnit);
+                Console.WriteLine("❌ Unable to retrieve logged-in user");
+                return Result<IngredientDto>.Failure("Unable to retrieve the logged-in user.");
             }
 
-            // Step 3: Handle NutritionalInfo
-            if (request.Ingredient.Nutrition != null)
-            {
-                if (request.Ingredient.Nutrition.IngredientId == null)
-                {
-                    request.Ingredient.Nutrition.IngredientId = request.Ingredient.Id;
-                }
+            var user = await _context.Users
+                .Include(u => u.Ingredients)
+                .FirstOrDefaultAsync(x => x.UserName == username, cancellationToken);
 
-                _context.NutritionalInfos.Add(request.Ingredient.Nutrition);
+            if (user == null)
+            {
+                _logger.LogWarning($"❌ User not found for username: {username}");
+                Console.WriteLine($"❌ User not found for username: {username}");
+                return Result<IngredientDto>.Failure("User not found");
             }
 
-            // Step 4: Save changes to the related entities
-            /*
-            await _context.SaveChangesAsync(cancellationToken);
-            */
-            var result = await _context.SaveChangesAsync() > 0;
-            if (!result) return Result<Unit>.Failure("Failed to create ingredient");
+            _logger.LogInformation($"👤 User {user.Id} found with {user.Ingredients.Count} existing ingredients.");
+            Console.WriteLine($"👤 User {user.Id} found with {user.Ingredients.Count} existing ingredients.");
+
+            // ✅ Convert DTO to Entity
+            var ingredient = _mapper.Map<Ingredient>(request.IngredientDto);
+            ingredient.Id = Guid.NewGuid();
+            ingredient.AppUser = user;
+            ingredient.AppUserId = user.Id;
             
-            return Result<Unit>.Success(Unit.Value);
+            if (ingredient.Nutrition != null)
+            {
+                ingredient.Nutrition.IngredientId = ingredient.Id;
+                _context.NutritionalInfos.Add(ingredient.Nutrition);
+            }
+
+            user.Ingredients.Add(ingredient);
+
+            _logger.LogInformation($"🛠️ Adding ingredient '{ingredient.Name}' for user {user.Id} with ID {ingredient.Id}...");
+            Console.WriteLine($"🛠️ Adding ingredient '{ingredient.Name}' for user {user.Id} with ID {ingredient.Id}...");
+
+            _context.Ingredients.Add(ingredient);
+
+            if (ingredient.Nutrition != null)
+                _context.NutritionalInfos.Add(ingredient.Nutrition);
+
+            var result = await _context.SaveChangesAsync(cancellationToken) > 0;
+
+            if (!result)
+            {
+                _logger.LogError("❌ Failed to save ingredient to the database.");
+                Console.WriteLine("❌ Failed to save ingredient to the database.");
+                return Result<IngredientDto>.Failure("Failed to create ingredient.");
+            }
+
+            _logger.LogInformation($"✅ Ingredient '{ingredient.Name}' successfully created with ID {ingredient.Id}.");
+            Console.WriteLine($"✅ Ingredient '{ingredient.Name}' successfully created with ID {ingredient.Id}.");
+
+            var ingredientDto = _mapper.Map<IngredientDto>(ingredient);
+            return Result<IngredientDto>.Success(ingredientDto);
         }
     }
 }
